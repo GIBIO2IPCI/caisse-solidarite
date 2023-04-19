@@ -34,6 +34,7 @@ class AdherentCrudController extends AbstractCrudController
             AssociationField::new('statut')->hideOnIndex()->setColumns(6),
             AssociationField::new('service')->hideOnIndex()->setColumns(6),
             AssociationField::new('fonction')->hideOnIndex()->setColumns(6),
+            AssociationField::new('droit_adhesion')->hideOnIndex()->setColumns(6),
             DateField::new('date_inscription')->hideOnForm()->setColumns(6),
         ];
     }
