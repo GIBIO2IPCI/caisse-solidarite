@@ -33,4 +33,6 @@ class FonctionCrudController extends AbstractCrudController
     return $crud
         ->showEntityActionsInlined();
    }
+
+
 }
