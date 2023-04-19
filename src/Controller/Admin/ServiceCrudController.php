@@ -25,7 +25,7 @@ class ServiceCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
+        return $crudGIT
             ->showEntityActionsInlined()
         ;
     }
