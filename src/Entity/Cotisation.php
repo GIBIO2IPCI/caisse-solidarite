@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CotisationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CotisationRepository::class)]
 class Cotisation
@@ -18,6 +19,7 @@ class Cotisation
     private ?string $montant_cotisation = null;
 
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: "create")]
     private ?\DateTimeImmutable $date_cotisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'cotisations')]
