@@ -30,6 +30,7 @@ class Adherent
     private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeInterface $date_inscription = null;
 
     #[ORM\ManyToOne(inversedBy: 'adherents')]

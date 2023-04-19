@@ -35,7 +35,6 @@ class AdherentCrudController extends AbstractCrudController
             AssociationField::new('service'),
             AssociationField::new('fonction'),
             DateField::new('date_inscription'),
-            
         ];
     }
    
