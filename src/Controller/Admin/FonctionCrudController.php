@@ -34,5 +34,15 @@ class FonctionCrudController extends AbstractCrudController
         ->showEntityActionsInlined();
    }
 
+   public function configureActions(Actions $actions): Actions
+   {
+       return $actions
+           ->update(Crud::PAGE_INDEX, Action::EDIT,
+               fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
+           ->update(Crud::PAGE_INDEX, Action::DELETE,
+               fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white'))
+           ;
+   }
+
 
 }
