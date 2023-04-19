@@ -36,7 +36,6 @@ class AdherentCrudController extends AbstractCrudController
             AssociationField::new('service')->hideOnIndex(),
             AssociationField::new('fonction')->hideOnIndex(),
             DateField::new('date_inscription')->hideOnForm(),
-            
         ];
     }
    
