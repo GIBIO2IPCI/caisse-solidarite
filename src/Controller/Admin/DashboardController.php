@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Adherent;
+use App\Entity\Cotisation;
 use App\Entity\Fonction;
 use App\Entity\Service;
 use App\Entity\SiteAdherent;
@@ -51,6 +52,8 @@ class DashboardController extends AbstractDashboardController
         
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         yield MenuItem::linkToCrud('Adherent', 'fas fa-people-group', Adherent::class);
+        yield MenuItem::linkToCrud('Cotisation', 'fa-solid fa-hand-holding-dollar', Cotisation::class);
+
 
         yield MenuItem::subMenu('Infos', 'fa fa-list')->setSubItems([
             MenuItem::linkToCrud('Fonctions', 'fas fa-list', Fonction::class),
