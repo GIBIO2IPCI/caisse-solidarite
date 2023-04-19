@@ -26,7 +26,7 @@ class AdherentCrudController extends AbstractCrudController
     {
 
         return [
-            TextField::new('identifiant'),
+            TextField::new('identifiant')->hideOnForm(),
             TextField::new('nom'),
             TextField::new('prenom'),
             EmailField::new('email'),

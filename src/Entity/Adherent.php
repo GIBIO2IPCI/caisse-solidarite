@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AdherentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AdherentRepository::class)]
 class Adherent
@@ -15,6 +16,7 @@ class Adherent
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['nom', 'telephone'], style: 'upper', separator: "")]
     private ?string $identifiant = null;
 
     #[ORM\Column(length: 255)]
