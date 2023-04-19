@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdherentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -49,6 +51,14 @@ class Adherent
     #[ORM\ManyToOne(inversedBy: 'adherents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Fonction $fonction = null;
+
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Cotisation::class)]
+    private Collection $cotisations;
+
+    public function __construct()
+    {
+        $this->cotisations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -171,6 +181,36 @@ class Adherent
     public function setFonction(?Fonction $fonction): self
     {
         $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Cotisation>
+     */
+    public function getCotisations(): Collection
+    {
+        return $this->cotisations;
+    }
+
+    public function addCotisation(Cotisation $cotisation): self
+    {
+        if (!$this->cotisations->contains($cotisation)) {
+            $this->cotisations->add($cotisation);
+            $cotisation->setAdherent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCotisation(Cotisation $cotisation): self
+    {
+        if ($this->cotisations->removeElement($cotisation)) {
+            // set the owning side to null (unless already changed)
+            if ($cotisation->getAdherent() === $this) {
+                $cotisation->setAdherent(null);
+            }
+        }
 
         return $this;
     }
