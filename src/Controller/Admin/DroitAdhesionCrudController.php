@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
 class DroitAdhesionCrudController extends AbstractCrudController
 {
@@ -31,8 +32,9 @@ class DroitAdhesionCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            MoneyField::new('montant')->setCurrency('XOF'),
+            NumberField::new('montant'),
             DateTimeField::new('date_adhesion'),
+            AssociationField::new('adherent'),
         ];
     }
 
