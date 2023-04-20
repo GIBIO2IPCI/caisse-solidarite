@@ -56,20 +56,20 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         yield MenuItem::linkToCrud('Adherent', 'fas fa-people-group', Adherent::class);
         yield MenuItem::linkToCrud('Cotisation', 'fa-solid fa-hand-holding-dollar', Cotisation::class);
-        yield MenuItem::linkToCrud('DroitAdhesion','fas fa-people-group' , DroitAdhesion::class);
+        yield MenuItem::linkToCrud('Adhesion','fa-solid fa-address-card' , DroitAdhesion::class);
 
         yield MenuItem::subMenu('Dons','fa-solid fa-hand-holding-medical')->setSubItems([
             MenuItem::linkToCrud('Liste des dons', 'fas fa-list', Don::class),
-            MenuItem::linkToCrud('Faire un don', 'fas fa-plus', Don::class)->setAction('new'),
+            MenuItem::linkToCrud('Faire un don', 'fa-solid fa-circle-plus', Don::class)->setAction('new'),
             MenuItem::linkToCrud('Type de dons', 'fas fa-list', TypeDon::class),
         ]);
 
 
-        yield MenuItem::subMenu('Infos', 'fa fa-list')->setSubItems([
-            MenuItem::linkToCrud('Fonctions', 'fas fa-list', Fonction::class),
-            MenuItem::linkToCrud('Service', 'fas fa-list', Service::class),
-            MenuItem::linkToCrud('SiteAadherent', 'fas fa-list', SiteAdherent::class),
-            MenuItem::linkToCrud('StatutAdherent', 'fas fa-list', StatutAdherent::class),
+        yield MenuItem::subMenu('Informations', 'fa fa-circle-info')->setSubItems([
+            MenuItem::linkToCrud('Fonctions', 'fa-solid fa-briefcase', Fonction::class),
+            MenuItem::linkToCrud('Service', 'fa-solid fa-building-flag', Service::class),
+            MenuItem::linkToCrud('Site', 'fa-solid fa-location-dot', SiteAdherent::class),
+            MenuItem::linkToCrud('Statut', 'fa-solid fa-person-circle-question', StatutAdherent::class),
         ]);
     }
 }
