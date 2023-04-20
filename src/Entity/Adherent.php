@@ -58,10 +58,14 @@ class Adherent
     #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: DroitAdhesion::class)]
     private Collection $droit_adhesion;
 
+    #[ORM\OneToMany(mappedBy: 'donnateur', targetEntity: Don::class)]
+    private Collection $dons;
+
     public function __construct()
     {
         $this->cotisations = new ArrayCollection();
         $this->droit_adhesion = new ArrayCollection();
+        $this->dons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +251,36 @@ class Adherent
             // set the owning side to null (unless already changed)
             if ($droitAdhesion->getAdherent() === $this) {
                 $droitAdhesion->setAdherent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Don>
+     */
+    public function getDons(): Collection
+    {
+        return $this->dons;
+    }
+
+    public function addDon(Don $don): self
+    {
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setDonnateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Don $don): self
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getDonnateur() === $this) {
+                $don->setDonnateur(null);
             }
         }
 
