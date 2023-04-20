@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\DonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 #[ORM\Entity(repositoryClass: DonRepository::class)]
 class Don
@@ -16,10 +18,11 @@ class Don
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $montant_don = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private string $montant_don;
 
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: "create")]
     private ?\DateTimeImmutable $date_don = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
@@ -93,5 +96,10 @@ class Don
         $this->donnateur = $donnateur;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->libelle;
     }
 }

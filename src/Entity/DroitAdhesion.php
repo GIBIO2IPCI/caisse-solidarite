@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\DroitAdhesionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 #[ORM\Entity(repositoryClass: DroitAdhesionRepository::class)]
 class DroitAdhesion
@@ -18,6 +20,7 @@ class DroitAdhesion
     private ?string $montant = null;
 
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: "create")]
     private ?\DateTimeImmutable $date_adhesion = null;
 
     #[ORM\ManyToOne(inversedBy: 'droit_adhesion')]

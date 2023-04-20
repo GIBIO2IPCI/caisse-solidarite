@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Adherent;
 use App\Entity\Cotisation;
+use App\Entity\Don;
 use App\Entity\DroitAdhesion;
 use App\Entity\Fonction;
 use App\Entity\Service;
 use App\Entity\SiteAdherent;
 use App\Entity\StatutAdherent;
+use App\Entity\TypeDon;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Menu\SubMenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -55,6 +57,12 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Adherent', 'fas fa-people-group', Adherent::class);
         yield MenuItem::linkToCrud('Cotisation', 'fa-solid fa-hand-holding-dollar', Cotisation::class);
         yield MenuItem::linkToCrud('DroitAdhesion','fas fa-people-group' , DroitAdhesion::class);
+
+        yield MenuItem::subMenu('Dons','fa-solid fa-hand-holding-medical')->setSubItems([
+            MenuItem::linkToCrud('Liste des dons', 'fas fa-list', Don::class),
+            MenuItem::linkToCrud('Faire un don', 'fas fa-plus', Don::class)->setAction('new'),
+            MenuItem::linkToCrud('Type de dons', 'fas fa-list', TypeDon::class),
+        ]);
 
 
         yield MenuItem::subMenu('Infos', 'fa fa-list')->setSubItems([
