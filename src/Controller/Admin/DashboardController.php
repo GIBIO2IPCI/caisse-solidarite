@@ -3,19 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Adherent;
+use App\Entity\Assistance;
 use App\Entity\Cotisation;
 use App\Entity\Don;
 use App\Entity\DroitAdhesion;
+use App\Entity\Evenement;
 use App\Entity\Fonction;
 use App\Entity\Service;
 use App\Entity\SiteAdherent;
 use App\Entity\StatutAdherent;
+use App\Entity\TypeAssistance;
 use App\Entity\TypeDon;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Menu\SubMenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -62,6 +63,12 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Liste des dons', 'fas fa-list', Don::class),
             MenuItem::linkToCrud('Faire un don', 'fa-solid fa-circle-plus', Don::class)->setAction('new'),
             MenuItem::linkToCrud('Type de dons', 'fas fa-list', TypeDon::class),
+        ]);
+
+        yield MenuItem::subMenu('Assistances','fa-solid fa-hand-holding-medical')->setSubItems([
+            MenuItem::linkToCrud('Evenement', 'fas fa-list', Evenement::class),
+            MenuItem::linkToCrud('Type assistance', 'fa-solid fa-circle-plus', TypeAssistance::class)->setAction('new'),
+            MenuItem::linkToCrud('Faire une assistance', 'fas fa-list', Assistance::class),
         ]);
 
 
