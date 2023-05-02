@@ -67,7 +67,7 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Assistances','fa-solid fa-hand-holding-medical')->setSubItems([
             MenuItem::linkToCrud('Evenement', 'fas fa-list', Evenement::class),
-            MenuItem::linkToCrud('Type assistance', 'fa-solid fa-circle-plus', TypeAssistance::class)->setAction('new'),
+            MenuItem::linkToCrud('Type assistance', 'fa-solid fa-circle-plus', TypeAssistance::class),
             MenuItem::linkToCrud('Faire une assistance', 'fas fa-list', Assistance::class),
         ]);
 
