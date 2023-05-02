@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AssistanceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AssistanceRepository::class)]
 class Assistance
@@ -14,11 +15,16 @@ class Assistance
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Gedmo\Timestampable(on: 'create')]
     private ?\DateTimeImmutable $date_assistance = null;
 
     #[ORM\ManyToOne(inversedBy: 'assistance')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Adherent $adherent = null;
+
+    #[ORM\ManyToOne(inversedBy: 'assistances')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Evenement $evenement = null;
 
     public function getId(): ?int
     {
@@ -45,6 +51,18 @@ class Assistance
     public function setAdherent(?Adherent $adherent): self
     {
         $this->adherent = $adherent;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
 
         return $this;
     }
