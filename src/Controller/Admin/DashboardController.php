@@ -72,4 +72,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Statut', 'fa-solid fa-person-circle-question', StatutAdherent::class),
         ]);
     }
+
+
 }
