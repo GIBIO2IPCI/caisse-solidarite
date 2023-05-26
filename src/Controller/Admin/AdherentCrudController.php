@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
@@ -28,12 +29,14 @@ class AdherentCrudController extends AbstractCrudController
 
         return [
             TextField::new('identifiant')->hideOnForm()->setColumns(6),
-            TextField::new('nom')->setColumns(6),
-            TextField::new('prenom')->setColumns(6),
-            EmailField::new('email')->setColumns(6),
-            TelephoneField::new('telephone')->setColumns(6),
-            AssociationField::new('site')->setColumns(6),
-            AssociationField::new('statut')->hideOnIndex()->setColumns(6),
+            TextField::new('nom')->setColumns(4),
+            TextField::new('prenom')->setColumns(4),
+            ChoiceField::new('sexe')->setColumns(4),
+            DateField::new('birthday')->setColumns(4),
+            EmailField::new('email')->setColumns(4),
+            TelephoneField::new('telephone')->setColumns(4),
+            AssociationField::new('site')->setColumns(4),
+            AssociationField::new('statut')->hideOnIndex()->setColumns(4),
             AssociationField::new('service')->hideOnIndex()->setColumns(6),
             AssociationField::new('fonction')->hideOnIndex()->setColumns(6),
             DateField::new('date_inscription')->hideOnForm()->setColumns(6),

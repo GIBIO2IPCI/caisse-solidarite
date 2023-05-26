@@ -64,6 +64,13 @@ class Adherent
     #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Assistance::class)]
     private Collection $assistance;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $birthday = null;
+
+    #[ORM\ManyToOne(inversedBy: 'adherents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Sexe $sexe = null;
+
     public function __construct()
     {
         $this->cotisations = new ArrayCollection();
@@ -317,6 +324,30 @@ class Adherent
                 $assistance->setAdherent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(\DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    public function getSexe(): ?Sexe
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?Sexe $sexe): self
+    {
+        $this->sexe = $sexe;
 
         return $this;
     }
