@@ -1,7 +1,7 @@
 {# templates/admin/my-custom-page.html.twig #}
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block content_title %}<h1 class="text-uppercase">Dashboard</h1>{% endblock %}
+{% block content_title %}<h1 class="text-uppercase text-center">tableau de bord</h1>{% endblock %}
 {#{% block page_actions %}
     <a class="btn btn-primary" href="...">Some Action</a>
 {% endblock %}#}
@@ -9,18 +9,88 @@
 {% block main %}
 
     {% set somme_assistance = 0 %}
+    {% set somme_don = 0 %}
+    {% set somme_cotisation = 0 %}
+    {% set somme_assistance_mois = 0 %}
 
-    <h1 class="text-center text-uppercase">Bienvenue sur le tableau de bord</h1>
-    <div class="alert alert-success">{{ nb_adherents }}</div>
-    <div class="alert alert-success">{{ nb_homme }} Homme </div>
-    <div class="alert alert-success">{{ nb_femme }} Femmes</div>
-    <div class="alert alert-success">{{ adh_fonction }}</div>
-    <div class="alert alert-success">{{ adh_depart }}</div>
-    <div class="alert alert-success">{{ adh_deces }}</div>
-    <div class="alert alert-success">
-        {% for assistance in total_assistance %}
-            {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
-        {% endfor %}
-        {{ somme_assistance }}
+    {% for assistance in total_assistance %}
+        {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
+    {% endfor %}
+
+    {% for don in total_don %}
+        {% set somme_don = somme_don + don.MontantDon %}
+    {% endfor %}
+
+    {% for cotisation in total_cotisation %}
+        {% set somme_cotisation = somme_cotisation + cotisation.MontantCotisation %}
+    {% endfor %}
+
+    {% for assistance in total_assistance_mois %}
+        {% set somme_assistance_mois = somme_assistance_mois + assistance.evenement.MontantEvent %}
+    {% endfor %}
+
+    <div class="row">
+
+        <div class="col-6">
+
+            {# partie d'adherents #}
+            <div class="card mb-4">
+                <div class="card-header">
+                    ADHERENTS
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Total des adherents <span class="badge badge-primary">{{ nb_adherents }}</span></li>
+                    <li class="list-group-item">Total des adherents annèe en cours <span class="badge badge-primary">{{ nb_adherent_an }}</span></li>
+                    <li class="list-group-item">Total des hommes <span class="badge badge-primary">{{ nb_homme}}</span></li>
+                    <li class="list-group-item">Total des femmes <span class="badge badge-primary">{{ nb_femme }}</span></li>
+                </ul>
+            </div>
+
+            {# partie du statut #}
+            <div class="card">
+                <div class="card-header">
+                   STATUT DES ADHERENTS
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Total des adherents en fonction <span class="badge badge-primary">{{ adh_fonction }}</span></li>
+                    <li class="list-group-item">Total des adherents partis <span class="badge badge-primary">{{ adh_depart}}</span></li>
+                    <li class="list-group-item">Total des adherents decedè <span class="badge badge-primary">{{ adh_deces}}</span></li>
+                </ul>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-6">
+
+            {# partie de la recette #}
+            <div class="card mb-4">
+                <div class="card-header">
+                   RECETTES
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Total des dons <span class="badge badge-primary">{{ nb_don }}</span></li>
+                    <li class="list-group-item">Total des cotisations <span class="badge badge-primary">{{ nb_cotisation }}</span></li>
+                    <li class="list-group-item">Montant total des dons <span class="badge badge-primary">{{ somme_don }} FCFA</span></li>
+                    <li class="list-group-item">Montant total des cotisations <span class="badge badge-primary">{{ somme_cotisation }} FCFA</span></li>
+                </ul>
+            </div>
+
+            {# partie des depenses #}
+            <div class="card">
+                <div class="card-header">
+                   DEPENSES
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Montant total des depenses <span class="badge badge-primary">{{ somme_assistance }} FCFA</span></li>
+                    <li class="list-group-item">Montant total des assistances pour le mois en cours <span class="badge badge-primary">{{ somme_assistance_mois}} FCFA</span></li>
+                </ul>
+            </div>
+
+        </div>
     </div>
+
+
+
 {% endblock %}

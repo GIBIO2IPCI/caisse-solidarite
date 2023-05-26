@@ -76,12 +76,24 @@ public function findByStatus($status): array {
 
     public function findBySexe($sexe): array {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.sexe =  :val')
+            ->andWhere('a.sexe = :val')
             ->setParameter("val", $sexe)
             ->getQuery()
             ->getResult()
 
             ;
+    }
+
+    public function findByDate(){
+        $annee = date("Y");
+        return $this->createQueryBuilder('a')
+        ->andWhere('DATE_FORMAT(a.date_inscription, :format) = :val')
+        ->setParameter("val", $annee)
+        ->setParameter("format", '%Y')
+        ->getQuery()
+        ->getResult()
+
+        ;
     }
 
 }

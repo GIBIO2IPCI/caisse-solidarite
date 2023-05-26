@@ -16,6 +16,9 @@ use App\Entity\TypeAssistance;
 use App\Entity\TypeDon;
 use App\Repository\AdherentRepository;
 use App\Repository\AssistanceRepository;
+use App\Repository\CotisationRepository;
+use App\Repository\DonRepository;
+use App\Repository\DroitAdhesionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -28,11 +31,15 @@ class DashboardController extends AbstractDashboardController
 
     private AdherentRepository $adherentRepository;
     private AssistanceRepository $assistanceRepository;
+    private CotisationRepository $cotisationRepository;
+    private DonRepository $donRepository;
 
-    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository) 
+    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository, DonRepository $donRepository, CotisationRepository $cotisationRepository) 
     {
         $this->adherentRepository = $adherentRepository;
         $this->assistanceRepository = $assistanceRepository;
+        $this->cotisationRepository = $cotisationRepository;
+        $this->donRepository = $donRepository;
     }
 
     
@@ -59,12 +66,17 @@ class DashboardController extends AbstractDashboardController
         //
 
         $total_adherent = count($this->adherentRepository->findAll());
+        $total_adherent_annee = count($this->adherentRepository->findByDate());
         $adherent_homme = count($this->adherentRepository->findBySexe(1));
         $adherent_femme = count($this->adherentRepository->findBySexe(2));
-        $adherent_fonction = count($this->adherentRepository->findByStatus(1));
-        $adherent_depart = count($this->adherentRepository->findByStatus(2));
-        $adherent_deces = count($this->adherentRepository->findByStatus(3));
+        $adherent_fonction = count($this->adherentRepository->findByStatus(1));  //adherents en fonction
+        $adherent_depart = count($this->adherentRepository->findByStatus(2));  //adherents partis
+        $adherent_deces = count($this->adherentRepository->findByStatus(3));  //adherents décédé
         $total_assistance = $this->assistanceRepository->findAll();
+        $total_assistance_mois = $this->assistanceRepository->findByDate();
+        $total_don = $this->donRepository->findAll();
+        $total_cotisation = $this->cotisationRepository->findAll();
+
         
 
          return $this->render('dashboard/index.html.twig', [
@@ -75,6 +87,12 @@ class DashboardController extends AbstractDashboardController
             "adh_depart" => $adherent_depart,
             "adh_deces" => $adherent_deces,
             "total_assistance" => $total_assistance,
+            "total_assistance_mois" => $total_assistance_mois,
+            "nb_adherent_an" => $total_adherent_annee,
+            "total_don" => $total_don,
+            "total_cotisation" => $total_cotisation,
+            "nb_cotisation" => count($total_cotisation),
+            "nb_don" => count($total_don),
          ]);
     }
 
