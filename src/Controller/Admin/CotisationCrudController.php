@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CotisationCrudController extends AbstractCrudController
@@ -32,7 +33,7 @@ class CotisationCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            MoneyField::new('montant_cotisation')->setCurrency('XOF'),
+            NumberField::new('montant_cotisation'),
             DateTimeField::new('date_cotisation')->hideOnForm(),
             AssociationField::new('adherent'),
         ];
