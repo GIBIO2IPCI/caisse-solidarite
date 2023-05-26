@@ -67,8 +67,4 @@ class Assistance
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->evenement;
-    }
 }

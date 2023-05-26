@@ -7,12 +7,16 @@
 {% endblock %}#}
 
 {% block main %}
+
+    {% set somme_assistance = 0 %}
+
     <h1 class="text-center text-uppercase">Bienvenue sur le tableau de bord</h1>
     <div class="alert alert-success">{{ nb_adherents }}</div>
     <div class="alert alert-success">{{ adh_fonction }}</div>
     <div class="alert alert-success">
-        {% for somme in total_assistan %}
-            {{somme}}
+        {% for assistance in total_assistance %}
+            {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
         {% endfor %}
+        {{ somme_assistance }}
     </div>
 {% endblock %}
