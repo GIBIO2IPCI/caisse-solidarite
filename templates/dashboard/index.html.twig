@@ -8,4 +8,11 @@
 
 {% block main %}
     <h1 class="text-center text-uppercase">Bienvenue sur le tableau de bord</h1>
+    <div class="alert alert-success">{{ nb_adherents }}</div>
+    <div class="alert alert-success">{{ adh_fonction }}</div>
+    <div class="alert alert-success">
+        {% for somme in total_assistan %}
+            {{somme}}
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -63,4 +63,15 @@ class AdherentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findByStatus($status): array {
+    return $this->createQueryBuilder('a')
+            ->andWhere('a.statut =  :val')
+            ->setParameter("val", $status)
+            ->getQuery()
+            ->getResult()
+
+        ;
+}
+
 }

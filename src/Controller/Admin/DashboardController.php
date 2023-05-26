@@ -14,6 +14,8 @@ use App\Entity\SiteAdherent;
 use App\Entity\StatutAdherent;
 use App\Entity\TypeAssistance;
 use App\Entity\TypeDon;
+use App\Repository\AdherentRepository;
+use App\Repository\AssistanceRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -22,6 +24,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+
+
+    private AdherentRepository $adherentRepository;
+    private AssistanceRepository $assistanceRepository;
+
+    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository) 
+    {
+        $this->adherentRepository = $adherentRepository;
+        $this->assistanceRepository = $assistanceRepository;
+    }
+
+    
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
@@ -42,7 +57,17 @@ class DashboardController extends AbstractDashboardController
         // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
-         return $this->render('dashboard/index.html.twig');
+
+        $total_adherent = count($this->adherentRepository->findAll());
+        $adherent_fonction = count($this->adherentRepository->findByStatus(1));
+        $total_assistance = $this->assistanceRepository->findAll();
+        
+
+         return $this->render('dashboard/index.html.twig', [
+            "nb_adherents" => $total_adherent,
+            "adh_fonction" => $adherent_fonction,
+            "total_assistance" => $total_assistance,
+         ]);
     }
 
     public function configureDashboard(): Dashboard
