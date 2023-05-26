@@ -72,6 +72,16 @@ public function findByStatus($status): array {
             ->getResult()
 
         ;
-}
+    }
+
+    public function findBySexe($sexe): array {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.sexe =  :val')
+            ->setParameter("val", $sexe)
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
 
 }

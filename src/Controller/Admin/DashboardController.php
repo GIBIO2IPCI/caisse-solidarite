@@ -59,13 +59,21 @@ class DashboardController extends AbstractDashboardController
         //
 
         $total_adherent = count($this->adherentRepository->findAll());
+        $adherent_homme = count($this->adherentRepository->findBySexe(1));
+        $adherent_femme = count($this->adherentRepository->findBySexe(2));
         $adherent_fonction = count($this->adherentRepository->findByStatus(1));
+        $adherent_depart = count($this->adherentRepository->findByStatus(2));
+        $adherent_deces = count($this->adherentRepository->findByStatus(3));
         $total_assistance = $this->assistanceRepository->findAll();
         
 
          return $this->render('dashboard/index.html.twig', [
             "nb_adherents" => $total_adherent,
+            "nb_homme" => $adherent_homme,
+            "nb_femme" => $adherent_femme,
             "adh_fonction" => $adherent_fonction,
+            "adh_depart" => $adherent_depart,
+            "adh_deces" => $adherent_deces,
             "total_assistance" => $total_assistance,
          ]);
     }
