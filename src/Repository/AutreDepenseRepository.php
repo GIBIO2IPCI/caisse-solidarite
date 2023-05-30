@@ -63,4 +63,16 @@ class AutreDepenseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findByDate(){
+        $annee = date("M");
+        return $this->createQueryBuilder('a')
+            ->andWhere('DATE_FORMAT(a.date_depense, :format) = :val')
+            ->setParameter("val", $annee)
+            ->setParameter("format", '%M')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
 }

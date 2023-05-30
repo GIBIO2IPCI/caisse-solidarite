@@ -18,6 +18,7 @@ use App\Entity\TypeAssistance;
 use App\Entity\TypeDon;
 use App\Repository\AdherentRepository;
 use App\Repository\AssistanceRepository;
+use App\Repository\AutreDepenseRepository;
 use App\Repository\CotisationRepository;
 use App\Repository\DonRepository;
 use App\Repository\DroitAdhesionRepository;
@@ -35,13 +36,15 @@ class DashboardController extends AbstractDashboardController
     private AssistanceRepository $assistanceRepository;
     private CotisationRepository $cotisationRepository;
     private DonRepository $donRepository;
+    private AutreDepenseRepository $autreDepenseRepository;
 
-    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository, DonRepository $donRepository, CotisationRepository $cotisationRepository) 
+    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository, DonRepository $donRepository, CotisationRepository $cotisationRepository, AutreDepenseRepository $autreDepenseRepository)
     {
         $this->adherentRepository = $adherentRepository;
         $this->assistanceRepository = $assistanceRepository;
         $this->cotisationRepository = $cotisationRepository;
         $this->donRepository = $donRepository;
+        $this->autreDepenseRepository = $autreDepenseRepository;
     }
 
     
@@ -76,8 +79,10 @@ class DashboardController extends AbstractDashboardController
         $adherent_deces = count($this->adherentRepository->findByStatus(3));  //adherents décédé
         $total_assistance = $this->assistanceRepository->findAll();
         $total_assistance_mois = $this->assistanceRepository->findByDate();
+        $total_autre_depense_mois = $this->autreDepenseRepository->findByDate();
         $total_don = $this->donRepository->findAll();
         $total_cotisation = $this->cotisationRepository->findAll();
+        $total_autre_depense = $this->autreDepenseRepository->findAll();
 
         
 
@@ -89,6 +94,8 @@ class DashboardController extends AbstractDashboardController
             "adh_depart" => $adherent_depart,
             "adh_deces" => $adherent_deces,
             "total_assistance" => $total_assistance,
+             "total_autre_depense" => $total_autre_depense,
+             "total_autre_depense_mois" => $total_autre_depense_mois,
             "total_assistance_mois" => $total_assistance_mois,
             "nb_adherent_an" => $total_adherent_annee,
             "total_don" => $total_don,

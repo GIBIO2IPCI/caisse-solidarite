@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AutreDepenseRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AutreDepenseRepository::class)]
 class AutreDepense
@@ -23,6 +25,10 @@ class AutreDepense
 
     #[ORM\Column]
     private ?int $montant = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Gedmo\Timestampable(on: 'create')]
+    private ?\DateTimeInterface $date_depense = null;
 
     public function getId(): ?int
     {
@@ -61,6 +67,18 @@ class AutreDepense
     public function setMontant(int $montant): self
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    public function getDateDepense(): ?\DateTimeInterface
+    {
+        return $this->date_depense;
+    }
+
+    public function setDateDepense(\DateTimeInterface $date_depense): self
+    {
+        $this->date_depense = $date_depense;
 
         return $this;
     }

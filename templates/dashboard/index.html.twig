@@ -2,13 +2,21 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
     {% set somme_assistance = 0 %}
+    {% set somme_autre_assistance = 0 %}
     {% set somme_don = 0 %}
     {% set somme_cotisation = 0 %}
     {% set somme_assistance_mois = 0 %}
+    {% set somme_autre_depense_mois = 0 %}
     {% set recette = somme_cotisation + somme_don %}
+    {% set depense = somme_assistance + somme_autre_assistance %}
+    {% set somme_net = recette - depense %}
 
     {% for assistance in total_assistance %}
         {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
+    {% endfor %}
+
+    {% for autre_assistance in total_autre_depense %}
+        {% set somme_autre_assistance = somme_autre_assistance + autre_assistance.montant %}
     {% endfor %}
 
     {% for don in total_don %}
@@ -23,11 +31,15 @@
         {% set somme_assistance_mois = somme_assistance_mois + assistance.evenement.MontantEvent %}
     {% endfor %}
 
+    {% for autre_assistance in total_autre_depense_mois %}
+        {% set somme_autre_depense_mois = somme_autre_depense_mois + autre_assistance.montant %}
+    {% endfor %}
+
 {% block content_title %}
 
     <div class="d-flex justify-content-between">
         <h1 class="text-uppercase">Tableau de bord</h1>
-        <h1>{{ nb_adherent_an }}</h1>
+        <h1>{{ somme_net }} FCFA</h1>
     </div>
 
 {% endblock %}
@@ -102,9 +114,13 @@
                         <h5>Montant total des dons</h5>
                         <span class="badge badge-primary">{{ somme_don }} FCFA</span>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-2">
                         <h5>Montant total des cotisations</h5>
                         <span class="badge badge-primary">{{ somme_cotisation }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5>total</h5>
+                        <span class="badge badge-primary">{{ recette }} FCFA</span>
                     </div>
                 </div>
             </div>
@@ -116,12 +132,12 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
-                        <h5>Montant des depenses</h5>
-                        <span class="badge badge-primary">{{ somme_assistance }} FCFA</span>
+                        <h5>Somme total des depenses</h5>
+                        <span class="badge badge-primary">{{ somme_assistance + somme_autre_assistance }} FCFA</span>
                     </div>
                      <div class="d-flex justify-content-between">
                         <h5>Montant des assistances pour ce mois</h5>
-                        <span class="badge badge-primary">{{ somme_assistance_mois }} FCFA</span>
+                        <span class="badge badge-primary">{{ somme_assistance_mois + somme_autre_depense_mois }} FCFA</span>
                     </div>
                 </div>
             </div>
