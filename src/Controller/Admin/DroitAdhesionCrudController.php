@@ -6,6 +6,7 @@ use App\Entity\DroitAdhesion;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -30,10 +31,11 @@ class DroitAdhesionCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            NumberField::new('montant'),
-            DateTimeField::new('date_adhesion')->hideOnForm(),
+            IdField::new('id')->hideOnIndex()->hideOnForm(),
+            NumberField::new('montant')->onlyOnDetail(),
             AssociationField::new('adherent'),
+            DateTimeField::new('date_adhesion')->hideOnForm(),
+            
         ];
     }
 
@@ -45,5 +47,11 @@ class DroitAdhesionCrudController extends AbstractCrudController
                ->update(Crud::PAGE_INDEX, Action::DELETE,
                fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white'))
            ;
+   }
+
+   public function configureFilters(Filters $filters): Filters
+   {
+        return $filters
+        ->add('adherent');
    }
 }

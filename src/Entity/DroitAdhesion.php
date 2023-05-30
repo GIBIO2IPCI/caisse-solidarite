@@ -17,7 +17,7 @@ class DroitAdhesion
     private ?int $id = null;
 
     #[ORM\Column(type: Types::BIGINT)]
-    private ?string $montant = null;
+    private ?int $montant = 3000;
 
     #[ORM\Column]
     #[Gedmo\Timestampable(on: "create")]

@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -24,7 +25,7 @@ class EvenementCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            IdField::new('id')->hideOnIndex()->hideOnForm(),
             TextField::new('libelle'),
             NumberField::new('montant_event'),
             AssociationField::new('type_assistance'),
@@ -50,5 +51,12 @@ class EvenementCrudController extends AbstractCrudController
             // ...
             ->showEntityActionsInlined()
             ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+        ->add('libelle')
+        ;
     }
 }

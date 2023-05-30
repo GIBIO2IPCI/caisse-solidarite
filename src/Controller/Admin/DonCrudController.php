@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -27,11 +28,13 @@ class DonCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm()->hideOnIndex(),
-            TextareaField::new('libelle'),
-            NumberField::new('montant_don'),
-            DateTimeField::new('date_don')->hideOnForm(),
-            AssociationField::new('type_don'),
             AssociationField::new('donnateur'),
+            TextareaField::new('libelle'),
+            AssociationField::new('type_don'),
+            NumberField::new('montant_don')->hideOnIndex(),
+            DateTimeField::new('date_don')->hideOnForm(),
+            
+            
 
         ];
     }
@@ -55,6 +58,14 @@ class DonCrudController extends AbstractCrudController
             // ...
             ->showEntityActionsInlined()
             ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+        ->add('donnateur')
+        ->add('type_don')
+        ;
     }
 
 }

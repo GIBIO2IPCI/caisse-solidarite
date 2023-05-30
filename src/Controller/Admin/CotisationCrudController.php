@@ -6,6 +6,7 @@ use App\Entity\Cotisation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -32,10 +33,11 @@ class CotisationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            NumberField::new('montant_cotisation'),
-            DateTimeField::new('date_cotisation')->hideOnForm(),
+            IdField::new('id')->hideOnIndex()->hideOnForm(),
             AssociationField::new('adherent'),
+            NumberField::new('montant_cotisation')->hideOnForm(),
+            DateTimeField::new('date_cotisation')->hideOnForm(),
+            
         ];
     }
 
@@ -48,4 +50,11 @@ class CotisationCrudController extends AbstractCrudController
            ;
    }
     
+   public function configureFilters(Filters $filters): Filters
+   {
+        return $filters
+        ->add('adherent')
+        
+        ;
+   }
 }

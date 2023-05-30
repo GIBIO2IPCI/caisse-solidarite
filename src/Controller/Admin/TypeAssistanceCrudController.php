@@ -28,13 +28,18 @@ class TypeAssistanceCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->update(Crud::PAGE_INDEX, Action::DETAIL,
-             fn (Action $action) => $action->setIcon('fa fa-eye')->addCssClass('btn btn-info'))
             ->update(Crud::PAGE_INDEX, Action::EDIT,
                 fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
             ->update(Crud::PAGE_INDEX, Action::DELETE,
                 fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white'))
+            ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            // ...
+            ->showEntityActionsInlined()
             ;
     }
 }

@@ -16,7 +16,7 @@ class Cotisation
     private ?int $id = null;
 
     #[ORM\Column(type: Types::BIGINT)]
-    private ?string $montant_cotisation = null;
+    private ?int $montant_cotisation = 1000;
 
     #[ORM\Column]
     #[Gedmo\Timestampable(on: "create")]

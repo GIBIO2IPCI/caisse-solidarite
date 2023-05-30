@@ -23,10 +23,12 @@ class AssistanceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            DateTimeField::new('date_assistance')->hideOnForm(),
-            AssociationField::new('evenement'),
+            IdField::new('id')->hideOnIndex()->hideOnForm(),
             AssociationField::new('adherent'),
+            AssociationField::new('evenement'),
+            DateTimeField::new('date_assistance')->hideOnForm(),
+            
+            
         ];
     }
 

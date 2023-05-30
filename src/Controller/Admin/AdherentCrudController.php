@@ -32,14 +32,14 @@ class AdherentCrudController extends AbstractCrudController
             TextField::new('nom')->setColumns(4),
             TextField::new('prenom')->setColumns(4),
             AssociationField::new('sexe')->setColumns(4),
-            DateField::new('birthday', 'date de naissance')->setColumns(4),
-            EmailField::new('email')->setColumns(4),
+            DateField::new('birthday', 'date de naissance')->hideOnIndex()->setColumns(4),
+            EmailField::new('email')->hideOnIndex()->setColumns(4),
             TelephoneField::new('telephone')->setColumns(4),
             AssociationField::new('site')->setColumns(4),
             AssociationField::new('statut')->hideOnIndex()->setColumns(4),
             AssociationField::new('service')->hideOnIndex()->setColumns(6),
             AssociationField::new('fonction')->hideOnIndex()->setColumns(6),
-            DateField::new('date_inscription')->hideOnForm()->setColumns(6),
+            DateField::new('date_inscription')->onlyOnDetail()->setColumns(6),
         ];
     }
 
@@ -68,7 +68,11 @@ class AdherentCrudController extends AbstractCrudController
     {
         return $filters
             ->add(DateTimeFilter::new('date_inscription'))
-            ->add('statut');
+            ->add('statut')
+            ->add('identifiant')
+            ->add('telephone')
+            
+            ;
     }
 
 }
