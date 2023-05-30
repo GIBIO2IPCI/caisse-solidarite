@@ -71,12 +71,16 @@ class Adherent
     #[ORM\JoinColumn(nullable: false)]
     private ?Sexe $sexe = null;
 
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: AutreDepense::class)]
+    private Collection $autreDepenses;
+
     public function __construct()
     {
         $this->cotisations = new ArrayCollection();
         $this->droit_adhesion = new ArrayCollection();
         $this->dons = new ArrayCollection();
         $this->assistance = new ArrayCollection();
+        $this->autreDepenses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,6 +352,36 @@ class Adherent
     public function setSexe(?Sexe $sexe): self
     {
         $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AutreDepense>
+     */
+    public function getAutreDepenses(): Collection
+    {
+        return $this->autreDepenses;
+    }
+
+    public function addAutreDepense(AutreDepense $autreDepense): self
+    {
+        if (!$this->autreDepenses->contains($autreDepense)) {
+            $this->autreDepenses->add($autreDepense);
+            $autreDepense->setAdherent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAutreDepense(AutreDepense $autreDepense): self
+    {
+        if ($this->autreDepenses->removeElement($autreDepense)) {
+            // set the owning side to null (unless already changed)
+            if ($autreDepense->getAdherent() === $this) {
+                $autreDepense->setAdherent(null);
+            }
+        }
 
         return $this;
     }

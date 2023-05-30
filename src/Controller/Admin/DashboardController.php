@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Adherent;
 use App\Entity\Assistance;
+use App\Entity\AutreDepense;
+use App\Entity\AutreEvenement;
 use App\Entity\Cotisation;
 use App\Entity\Don;
 use App\Entity\DroitAdhesion;
@@ -118,8 +120,10 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Assistances','fa-solid fa-hand-holding-medical')->setSubItems([
             MenuItem::linkToCrud('Evenement', 'fas fa-list', Evenement::class),
+            MenuItem::linkToCrud('Autre Evenement', 'fas fa-list', AutreEvenement::class),
             MenuItem::linkToCrud('Type assistance', 'fa-solid fa-circle-plus', TypeAssistance::class),
             MenuItem::linkToCrud('Faire une assistance', 'fas fa-list', Assistance::class),
+            MenuItem::linkToCrud('Autre assistance', 'fas fa-list', AutreDepense::class),
         ]);
 
 
