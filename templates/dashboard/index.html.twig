@@ -1,17 +1,11 @@
 {# templates/admin/my-custom-page.html.twig #}
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block content_title %}<h1 class="text-uppercase text-center">tableau de bord</h1>{% endblock %}
-{#{% block page_actions %}
-    <a class="btn btn-primary" href="...">Some Action</a>
-{% endblock %}#}
-
-{% block main %}
-
     {% set somme_assistance = 0 %}
     {% set somme_don = 0 %}
     {% set somme_cotisation = 0 %}
     {% set somme_assistance_mois = 0 %}
+    {% set recette = somme_cotisation + somme_don %}
 
     {% for assistance in total_assistance %}
         {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
@@ -29,66 +23,108 @@
         {% set somme_assistance_mois = somme_assistance_mois + assistance.evenement.MontantEvent %}
     {% endfor %}
 
-    <div class="row">
+{% block content_title %}
 
-        <div class="col-6">
+    <div class="d-flex justify-content-between">
+        <h1 class="text-uppercase">Tableau de bord</h1>
+        <h1>{{ nb_adherent_an }}</h1>
+    </div>
 
+{% endblock %}
+{#{% block page_actions %}
+    <a class="btn btn-primary" href="...">Some Action</a>
+{% endblock %}#}
+
+{% block main %}
+
+    <div class="row gy-2">
             {# partie d'adherents #}
-            <div class="card mb-4">
-                <div class="card-header text-bold">
-                    ADHERENTS
+            <div class="card text-bg-success col-6 me-2" style="max-width: 33rem">
+                <div class="card-header text-bold ">
+                   ADHERENTS
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Total des adherents <span class="badge badge-primary">{{ nb_adherents }}</span></li>
-                    <li class="list-group-item">Total des adherents annèe en cours <span class="badge badge-primary">{{ nb_adherent_an }}</span></li>
-                    <li class="list-group-item">Total des hommes <span class="badge badge-primary">{{ nb_homme}}</span></li>
-                    <li class="list-group-item">Total des femmes <span class="badge badge-primary">{{ nb_femme }}</span></li>
-                </ul>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Nombre total des adherents</h5>
+                        <span class="badge badge-primary">{{ nb_adherents }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Nombre total des adhérents de cette année</h5>
+                        <span class="badge badge-primary">{{ nb_adherent_an }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Montant total des hommes</h5>
+                        <span class="badge badge-primary">{{ nb_homme }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5>Montant total des femmes</h5>
+                        <span class="badge badge-primary">{{ nb_femme }} FCFA</span>
+                    </div>
+                </div>
             </div>
 
             {# partie du statut #}
-            <div class="card">
-                <div class="card-header text-bold">
+            <div class="card text-bg-primary col-6 " style="max-width: 33rem">
+                <div class="card-header text-bold ">
                    STATUT DES ADHERENTS
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Total des adherents en fonction <span class="badge badge-primary">{{ adh_fonction }}</span></li>
-                    <li class="list-group-item">Total des adherents partis <span class="badge badge-primary">{{ adh_depart}}</span></li>
-                    <li class="list-group-item">Total des adherents decedè <span class="badge badge-primary">{{ adh_deces}}</span></li>
-                </ul>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Total des adherents en fonction</h5>
+                        <span class="badge badge-primary">{{ adh_fonction }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Total des adherents partis</h5>
+                        <span class="badge badge-primary">{{ adh_depart }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Total des adherents décédés</h5>
+                        <span class="badge badge-primary">{{ adh_deces }} FCFA</span>
+                    </div>
+                </div>
             </div>
 
-
-        </div>
-
-
-        <div class="col-6">
-
             {# partie de la recette #}
-            <div class="card mb-4">
-                <div class="card-header text-bold">
+            <div class="card text-bg-secondary col-6 me-2" style="max-width: 33rem">
+                <div class="card-header text-bold ">
                    RECETTES
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Total des dons <span class="badge badge-primary">{{ nb_don }}</span></li>
-                    <li class="list-group-item">Total des cotisations <span class="badge badge-primary">{{ nb_cotisation }}</span></li>
-                    <li class="list-group-item">Montant total des dons <span class="badge badge-primary">{{ somme_don }} FCFA</span></li>
-                    <li class="list-group-item">Montant total des cotisations <span class="badge badge-primary">{{ somme_cotisation }} FCFA</span></li>
-                </ul>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Nombre total des dons</h5>
+                        <span class="badge badge-primary">{{ nb_don }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Nombre total des cotisations</h5>
+                        <span class="badge badge-primary">{{ nb_cotisation }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Montant total des dons</h5>
+                        <span class="badge badge-primary">{{ somme_don }} FCFA</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h5>Montant total des cotisations</h5>
+                        <span class="badge badge-primary">{{ somme_cotisation }} FCFA</span>
+                    </div>
+                </div>
             </div>
 
             {# partie des depenses #}
-            <div class="card">
-                <div class="card-header text-bold">
+            <div class="card text-bg-warning col-6 " style="max-width: 33rem">
+                <div class="card-header text-bold ">
                    DEPENSES
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Montant total des depenses <span class="badge badge-primary">{{ somme_assistance }} FCFA</span></li>
-                    <li class="list-group-item">Montant total des assistances pour le mois en cours <span class="badge badge-primary">{{ somme_assistance_mois}} FCFA</span></li>
-                </ul>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h5>Montant des depenses</h5>
+                        <span class="badge badge-primary">{{ somme_assistance }} FCFA</span>
+                    </div>
+                     <div class="d-flex justify-content-between">
+                        <h5>Montant des assistances pour ce mois</h5>
+                        <span class="badge badge-primary">{{ somme_assistance_mois }} FCFA</span>
+                    </div>
+                </div>
             </div>
-
-        </div>
     </div>
 
 
