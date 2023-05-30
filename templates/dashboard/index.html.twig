@@ -2,14 +2,14 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
     {% set somme_assistance = 0 %}
+    {% set somme_assistance_mois = 0 %}
     {% set somme_autre_assistance = 0 %}
+    {% set somme_autre_depense_mois = 0 %}
     {% set somme_don = 0 %}
     {% set somme_cotisation = 0 %}
-    {% set somme_assistance_mois = 0 %}
-    {% set somme_autre_depense_mois = 0 %}
-    {% set recette = somme_cotisation + somme_don %}
-    {% set depense = somme_assistance + somme_autre_assistance %}
-    {% set somme_net = recette - depense %}
+    {% set somme_net = 0 %}
+    {% set recette = 0 %}
+    {% set depense = 0 %}
 
     {% for assistance in total_assistance %}
         {% set somme_assistance = somme_assistance + assistance.evenement.MontantEvent %}
@@ -34,6 +34,10 @@
     {% for autre_assistance in total_autre_depense_mois %}
         {% set somme_autre_depense_mois = somme_autre_depense_mois + autre_assistance.montant %}
     {% endfor %}
+
+    {% set recette = somme_cotisation + somme_don %}
+    {% set depense = somme_assistance + somme_autre_assistance %}
+    {% set somme_net = recette - depense %}
 
 {% block content_title %}
 
