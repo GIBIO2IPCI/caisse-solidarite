@@ -18,13 +18,13 @@ class Cotisation
     #[ORM\Column(type: Types::BIGINT)]
     private ?int $montant_cotisation = 1000;
 
-    #[ORM\Column]
-    #[Gedmo\Timestampable(on: "create")]
-    private ?\DateTimeImmutable $date_cotisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'cotisations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Adherent $adherent = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_cotisation = null;
 
     public function getId(): ?int
     {
@@ -43,18 +43,6 @@ class Cotisation
         return $this;
     }
 
-    public function getDateCotisation(): ?\DateTimeImmutable
-    {
-        return $this->date_cotisation;
-    }
-
-    public function setDateCotisation(\DateTimeImmutable $date_cotisation): self
-    {
-        $this->date_cotisation = $date_cotisation;
-
-        return $this;
-    }
-
     public function getAdherent(): ?Adherent
     {
         return $this->adherent;
@@ -63,6 +51,18 @@ class Cotisation
     public function setAdherent(?Adherent $adherent): self
     {
         $this->adherent = $adherent;
+
+        return $this;
+    }
+
+    public function getDateCotisation(): ?\DateTimeInterface
+    {
+        return $this->date_cotisation;
+    }
+
+    public function setDateCotisation(\DateTimeInterface $date_cotisation): self
+    {
+        $this->date_cotisation = $date_cotisation;
 
         return $this;
     }
