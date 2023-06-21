@@ -21,16 +21,16 @@ class Adherent
     #[Gedmo\Slug(fields: ['nom', 'telephone'], style: 'upper', separator: "")]
     private ?string $identifiant = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
