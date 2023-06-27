@@ -79,8 +79,9 @@ class DashboardController extends AbstractDashboardController
         $adherent_homme = count($this->adherentRepository->findBySexe(2));
         $adherent_femme = count($this->adherentRepository->findBySexe(1));
         $adherent_fonction = count($this->adherentRepository->findByStatus(1));  //adherents en fonction
-        $adherent_depart = count($this->adherentRepository->findByStatus(2));  //adherents partis
-        $adherent_deces = count($this->adherentRepository->findByStatus(3));  //adherents décédé
+        $adherent_depart = count($this->adherentRepository->findByStatus(4));  //adherents partis
+        $adherent_deces = count($this->adherentRepository->findByStatus(3)); 
+        $adherent_retraite = count($this->adherentRepository->findByStatus(2)); //adherents décédé
         $total_assistance = $this->assistanceRepository->findAll();
         $total_assistance_mois = $this->assistanceRepository->findByDate();
         $total_autre_depense_mois = $this->autreDepenseRepository->findByDate();
@@ -98,6 +99,7 @@ class DashboardController extends AbstractDashboardController
             "adh_fonction" => $adherent_fonction,
             "adh_depart" => $adherent_depart,
             "adh_deces" => $adherent_deces,
+            "adh_retraite" => $adherent_retraite,
             "total_assistance" => $total_assistance,
              "total_autre_depense" => $total_autre_depense,
              "total_autre_depense_mois" => $total_autre_depense_mois,
