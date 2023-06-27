@@ -3,11 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AutreDepense;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AutreDepenseCrudController extends AbstractCrudController
 {
@@ -25,5 +28,34 @@ class AutreDepenseCrudController extends AbstractCrudController
             IntegerField::new('montant'),
             DateField::new('date_depense', 'Date de la dépense')->hideOnForm(),
         ];
+    }
+
+     public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->update(Crud::PAGE_INDEX, Action::EDIT,
+                fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
+            ->update(Crud::PAGE_INDEX, Action::DELETE,
+                fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white'))
+             ->update(Crud::PAGE_INDEX, Action::NEW,
+                fn (Action $action) => $action->setLabel("Faire une assistance execptionnelle")
+            )
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN,
+                fn (Action $action) => $action->setLabel("Enregistrer")
+            )
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER,
+                fn (Action $action) => $action->setLabel("Enregistrer et faire une assistance exceptionnelle")
+            )
+            ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            // ...
+            ->showEntityActionsInlined()
+            ->setPageTitle('new', 'Enregistrement')
+            ->setPageTitle('index', 'Liste des assistances exceptionnelles')
+            ;
     }
 }

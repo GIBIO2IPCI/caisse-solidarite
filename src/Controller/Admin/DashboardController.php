@@ -11,17 +11,20 @@ use App\Entity\Don;
 use App\Entity\DroitAdhesion;
 use App\Entity\Evenement;
 use App\Entity\Fonction;
+use App\Entity\Fonctionnement;
 use App\Entity\Service;
 use App\Entity\SiteAdherent;
 use App\Entity\StatutAdherent;
 use App\Entity\TypeAssistance;
 use App\Entity\TypeDon;
+use App\Entity\TypeFonctionnement;
 use App\Repository\AdherentRepository;
 use App\Repository\AssistanceRepository;
 use App\Repository\AutreDepenseRepository;
 use App\Repository\CotisationRepository;
 use App\Repository\DonRepository;
 use App\Repository\DroitAdhesionRepository;
+use App\Repository\FonctionnementRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -37,14 +40,15 @@ class DashboardController extends AbstractDashboardController
     private CotisationRepository $cotisationRepository;
     private DonRepository $donRepository;
     private AutreDepenseRepository $autreDepenseRepository;
-
-    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository, DonRepository $donRepository, CotisationRepository $cotisationRepository, AutreDepenseRepository $autreDepenseRepository)
+    private FonctionnementRepository $fonctionnementRepository;
+    public function __construct(AdherentRepository $adherentRepository, AssistanceRepository $assistanceRepository, DonRepository $donRepository, CotisationRepository $cotisationRepository, AutreDepenseRepository $autreDepenseRepository, FonctionnementRepository $fonctionnementRepository)
     {
         $this->adherentRepository = $adherentRepository;
         $this->assistanceRepository = $assistanceRepository;
         $this->cotisationRepository = $cotisationRepository;
         $this->donRepository = $donRepository;
         $this->autreDepenseRepository = $autreDepenseRepository;
+        $this->fonctionnementRepository = $fonctionnementRepository;
     }
 
     
@@ -72,8 +76,8 @@ class DashboardController extends AbstractDashboardController
 
         $total_adherent = count($this->adherentRepository->findAll());
         $total_adherent_annee = count($this->adherentRepository->findByDate());
-        $adherent_homme = count($this->adherentRepository->findBySexe(1));
-        $adherent_femme = count($this->adherentRepository->findBySexe(2));
+        $adherent_homme = count($this->adherentRepository->findBySexe(2));
+        $adherent_femme = count($this->adherentRepository->findBySexe(1));
         $adherent_fonction = count($this->adherentRepository->findByStatus(1));  //adherents en fonction
         $adherent_depart = count($this->adherentRepository->findByStatus(2));  //adherents partis
         $adherent_deces = count($this->adherentRepository->findByStatus(3));  //adherents décédé
@@ -83,6 +87,7 @@ class DashboardController extends AbstractDashboardController
         $total_don = $this->donRepository->findAll();
         $total_cotisation = $this->cotisationRepository->findAll();
         $total_autre_depense = $this->autreDepenseRepository->findAll();
+        $total_fonctionnement = $this->fonctionnementRepository->findAll();
 
         
 
@@ -102,6 +107,7 @@ class DashboardController extends AbstractDashboardController
             "total_cotisation" => $total_cotisation,
             "nb_cotisation" => count($total_cotisation),
             "nb_don" => count($total_don),
+            "total_fonctionnement" => $total_fonctionnement,
          ]);
     }
 
@@ -122,15 +128,21 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Dons','fa-solid fa-hand-holding-medical')->setSubItems([
             MenuItem::linkToCrud('Liste des dons', 'fas fa-list', Don::class),
             MenuItem::linkToCrud('Faire un don', 'fa-solid fa-circle-plus', Don::class)->setAction('new'),
-            MenuItem::linkToCrud('Type de dons', 'fas fa-list', TypeDon::class),
+            MenuItem::linkToCrud('Type de dons', 'fa-solid fa-bars', TypeDon::class),
         ]);
 
-        yield MenuItem::subMenu('Assistances','fa-solid fa-hand-holding-medical')->setSubItems([
-            MenuItem::linkToCrud('Evenement', 'fas fa-list', Evenement::class),
-            MenuItem::linkToCrud('Autre Evenement', 'fas fa-list', AutreEvenement::class),
-            MenuItem::linkToCrud('Type assistance', 'fa-solid fa-circle-plus', TypeAssistance::class),
-            MenuItem::linkToCrud('Faire une assistance', 'fas fa-list', Assistance::class),
-            MenuItem::linkToCrud('Autre assistance', 'fas fa-list', AutreDepense::class),
+        yield MenuItem::subMenu('Assistances','fa-solid fa-handshake-angle')->setSubItems([
+            MenuItem::linkToCrud('Faire une assistance', 'fa-solid fa-hand-holding-heart', Assistance::class),
+            MenuItem::linkToCrud('Assistance Exceptionnelle', 'fa-solid fa-tablets', AutreDepense::class),
+            MenuItem::linkToCrud('Evenement', 'fa-brands fa-elementor', Evenement::class),
+            MenuItem::linkToCrud('Evenement Exceptionnel', 'fa-solid fa-rectangle-list', AutreEvenement::class),
+           
+        ]);
+
+            yield MenuItem::subMenu('Fonctionnement','fa-solid fa-hand-holding-medical')->setSubItems([
+            MenuItem::linkToCrud('Ajouter', 'fa-solid fa-circle-plus', Fonctionnement::class),
+            MenuItem::linkToCrud('Type', 'fa-solid fa-up-down-left-right', TypeFonctionnement::class),
+           
         ]);
 
 

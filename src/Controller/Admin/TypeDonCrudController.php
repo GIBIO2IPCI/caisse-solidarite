@@ -36,6 +36,15 @@ class TypeDonCrudController extends AbstractCrudController
                 fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
             ->update(Crud::PAGE_INDEX, Action::DELETE,
                 fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white'))
+                ->update(Crud::PAGE_INDEX, Action::NEW,
+                fn (Action $action) => $action->setLabel("Ajouter un type don")
+            )
+                    ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN,
+                fn (Action $action) => $action->setLabel("Enregistrer")
+            )
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER,
+                fn (Action $action) => $action->setLabel("Enregistrer et ajouter un type don")
+            )
             ;
     }
 
@@ -44,6 +53,8 @@ class TypeDonCrudController extends AbstractCrudController
         return $crud
             // ...
             ->showEntityActionsInlined()
+            ->setPageTitle('new', 'Enregistrement')
+            ->setPageTitle('index', 'Liste des dons')
             ;
     }
 }

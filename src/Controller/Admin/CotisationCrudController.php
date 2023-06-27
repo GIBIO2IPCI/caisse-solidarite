@@ -8,16 +8,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CotisationCrudController extends AbstractCrudController
 {
@@ -30,7 +25,10 @@ class CotisationCrudController extends AbstractCrudController
    {
 
     return $crud
-        ->showEntityActionsInlined();
+        ->showEntityActionsInlined()
+        ->setPageTitle('new', 'Enregistrement')
+        ->setPageTitle('index', 'Liste des cotisations')
+        ;
    }
 
     
@@ -40,7 +38,7 @@ class CotisationCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->hideOnForm(),
             AssociationField::new('adherent'),
             NumberField::new('montant_cotisation')->hideOnForm(),
-            DateField::new('date_cotisation')->setFormat('MM-yyyy')->renderAsChoice(),
+            DateField::new('date_cotisation')->renderAsChoice(),
             
         ];
     }
@@ -51,6 +49,15 @@ class CotisationCrudController extends AbstractCrudController
            ->update(Crud::PAGE_INDEX, Action::EDIT,
                fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->update(Crud::PAGE_INDEX, Action::NEW,
+                fn (Action $action) => $action->setLabel("Payer une cotisation")
+            )
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN,
+                fn (Action $action) => $action->setLabel("Enregistrer")
+            )
+            ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER,
+                fn (Action $action) => $action->setLabel("Enregistrer et payer une autre cotisation")
+            )
            ;
    }
     
@@ -58,8 +65,7 @@ class CotisationCrudController extends AbstractCrudController
    {
         return $filters
         ->add('adherent')
-        
+       
         ;
    }
-
 }

@@ -10,6 +10,7 @@
     {% set somme_net = 0 %}
     {% set recette = 0 %}
     {% set depense = 0 %}
+    {% set somme_fonctionnement = 0 %}
     {% set somme_adhesion = nb_adherents * 3000 %}
 
     {% for assistance in total_assistance %}
@@ -36,15 +37,19 @@
         {% set somme_autre_depense_mois = somme_autre_depense_mois + autre_assistance.montant %}
     {% endfor %}
 
+    {% for fonctionnement in total_fonctionnement %}
+        {% set somme_fonctionnement = somme_fonctionnement + fonctionnement.montant %}
+    {% endfor %}
+
     {% set recette = somme_cotisation + somme_don + somme_adhesion %}
-    {% set depense = somme_assistance + somme_autre_assistance %}
+    {% set depense = somme_assistance + somme_autre_assistance + somme_fonctionnement %}
     {% set somme_net = recette - depense %}
 
 {% block content_title %}
 
     <div class="d-flex justify-content-between">
-        <h1 class="text-uppercase">Tableau de bord</h1>
-        <h1>{{ somme_net }} FCFA</h1>
+        <h1 class="text-uppercase fw-bold">Tableau de bord</h1>
+        <h1 class="fw-bold" style="font-size:50px">{{ somme_net| number_format(0, ' ', ' ')  }} FCFA</h1>
     </div>
 
 {% endblock %}
@@ -56,47 +61,47 @@
 
     <div class="row gy-2">
             {# partie d'adherents #}
-            <div class="card text-bg-success col-6 ">
+            <div class="card col-6 " style="background-color: #8AD9B0">
                 <div class="card-header text-bold ">
                    ADHERENTS
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Nombre total des adherents</h5>
-                        <span class="badge badge-primary">{{ nb_adherents }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ nb_adherents }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Nombre total des adhérents de cette année</h5>
-                        <span class="badge badge-primary">{{ nb_adherent_an }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ nb_adherent_an }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Nombre total des hommes</h5>
-                        <span class="badge badge-primary">{{ nb_homme }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ nb_homme }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h5>Nombre total des femmes</h5>
-                        <span class="badge badge-primary">{{ nb_femme }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ nb_femme }}</span>
                     </div>
                 </div>
             </div>
 
             {# partie du statut #}
-            <div class="card text-bg-primary col-6 ">
+            <div class="card card-statut  col-6 " style="background-color: #EDE5C1">
                 <div class="card-header text-bold ">
                    STATUT DES ADHERENTS
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Total des adherents en fonction</h5>
-                        <span class="badge badge-primary">{{ adh_fonction }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ adh_fonction }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Total des adherents partis</h5>
-                        <span class="badge badge-primary">{{ adh_depart }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ adh_depart }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Total des adherents décédés</h5>
-                        <span class="badge badge-primary">{{ adh_deces }}</span>
+                        <span class="fw-bold" style="font-size:20px">{{ adh_deces }}</span>
                     </div>
                 </div>
             </div>
@@ -109,36 +114,36 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Montant Total des adhesions</h5>
-                        <span class="badge badge-primary">{{somme_adhesion }} FCFA</span>
+                        <span class="fw-bold" style="font-size:20px">{{somme_adhesion| number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Montant total des dons</h5>
-                        <span class="badge badge-primary">{{ somme_don }} FCFA</span>
+                        <span class="fw-bold" style="font-size:20px">{{ somme_don| number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Montant total des cotisations</h5>
-                        <span class="badge badge-primary">{{ somme_cotisation }} FCFA</span>
+                        <span class="fw-bold" style="font-size:20px">{{ somme_cotisation| number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h5>Total Recette</h5>
-                        <span class="badge badge-primary">{{ recette }} FCFA</span>
+                        <span class="fw-bold" style="font-size:28px">{{ recette | number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                 </div>
             </div>
 
             {# partie des depenses #}
-            <div class="card text-bg-warning col-6">
+            <div class="card col-6" style="background-color: #D9A096">
                 <div class="card-header text-bold ">
                    DEPENSES
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <h5>Somme total des depenses</h5>
-                        <span class="badge badge-primary">{{ somme_assistance + somme_autre_assistance }} FCFA</span>
+                        <span class="fw-bold" style="font-size:20px">{{ (somme_assistance + somme_autre_assistance + somme_fonctionnement)| number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                      <div class="d-flex justify-content-between">
                         <h5>Montant des assistances pour ce mois</h5>
-                        <span class="badge badge-primary">{{ somme_assistance_mois + somme_autre_depense_mois }} FCFA</span>
+                        <span class="fw-bold" style="font-size:20px">{{ (somme_assistance_mois + somme_autre_depense_mois)| number_format(0, ' ', ' ') }} FCFA</span>
                     </div>
                 </div>
             </div>

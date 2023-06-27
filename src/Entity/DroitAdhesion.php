@@ -19,9 +19,9 @@ class DroitAdhesion
     #[ORM\Column(type: Types::BIGINT)]
     private ?int $montant = 3000;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Gedmo\Timestampable(on: "create")]
-    private ?\DateTimeImmutable $date_adhesion = null;
+    private ?\DateTimeInterface $date_adhesion = null;
 
     #[ORM\ManyToOne(inversedBy: 'droit_adhesion')]
     private ?Adherent $adherent = null;
@@ -43,12 +43,12 @@ class DroitAdhesion
         return $this;
     }
 
-    public function getDateAdhesion(): ?\DateTimeImmutable
+    public function getDateAdhesion(): ?\DateTimeInterface
     {
         return $this->date_adhesion;
     }
 
-    public function setDateAdhesion(\DateTimeImmutable $date_adhesion): self
+    public function setDateAdhesion(\DateTimeInterface $date_adhesion): self
     {
         $this->date_adhesion = $date_adhesion;
 
