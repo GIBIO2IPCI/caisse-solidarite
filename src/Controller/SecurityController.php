@@ -57,13 +57,13 @@ class SecurityController extends AbstractController
             'target_path' => $this->generateUrl('admin'),
 
             // the label displayed for the username form field (the |trans filter is applied to it)
-            'username_label' => 'Your username',
+            'username_label' => "Nom d'utilisateur",
 
             // the label displayed for the password form field (the |trans filter is applied to it)
-            'password_label' => 'Your password',
+            'password_label' => 'Mot de passe',
 
             // the label displayed for the Sign In form button (the |trans filter is applied to it)
-            'sign_in_label' => 'Log in',
+            'sign_in_label' => 'Se connecter',
 
             // the 'name' HTML attribute of the <input> used for the username field (default: '_username')
             'username_parameter' => 'email',
@@ -90,7 +90,7 @@ class SecurityController extends AbstractController
             'remember_me_checked' => true,
 
             // the label displayed for the remember me checkbox (the |trans filter is applied to it)
-            'remember_me_label' => 'Remember me',
+            'remember_me_label' => 'Se souvenir de moi',
         ]);
     }
 
