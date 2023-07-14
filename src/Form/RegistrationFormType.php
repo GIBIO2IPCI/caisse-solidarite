@@ -21,13 +21,15 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('adherent', EntityType::class, [
-                'class' => Adherent::class
+            ->add('adherent', AdherentAutocompleteField::class, [
+                'class' => Adherent::class,
+                'placeholder' => 'selection d\'un adherent',
             ])
-            ->add('MotPasse', PasswordType::class, [
+            ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => 'Mot de passe',
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -41,8 +43,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('accepterLesConditions', CheckboxType::class, [
+            ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'J\'accepte les conditions d\'utilisation',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',

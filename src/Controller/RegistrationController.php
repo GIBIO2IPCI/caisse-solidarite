@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('MotPasse')->getData()
+                    $form->get('plainPassword')->getData()
                 )
             );
             $user->setRoles(["ROLE_ADMIN"]);

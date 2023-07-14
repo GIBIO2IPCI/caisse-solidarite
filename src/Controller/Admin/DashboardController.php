@@ -33,8 +33,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-
-
     private AdherentRepository $adherentRepository;
     private AssistanceRepository $assistanceRepository;
     private CotisationRepository $cotisationRepository;
