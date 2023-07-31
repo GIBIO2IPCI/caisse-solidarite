@@ -26,7 +26,7 @@ class AssistanceCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->hideOnForm(),
             AssociationField::new('adherent'),
             AssociationField::new('evenement'),
-            DateTimeField::new('date_assistance')->hideOnForm(),
+            DateTimeField::new('date_assistance')
             
             
         ];
