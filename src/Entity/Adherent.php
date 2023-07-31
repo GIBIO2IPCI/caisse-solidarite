@@ -52,16 +52,16 @@ class Adherent
     #[ORM\JoinColumn(nullable: false)]
     private ?Fonction $fonction = null;
 
-    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Cotisation::class)]
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Cotisation::class, cascade: ['remove'])]
     private Collection $cotisations;
 
-    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: DroitAdhesion::class)]
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: DroitAdhesion::class, cascade: ['remove'])]
     private Collection $droit_adhesion;
 
-    #[ORM\OneToMany(mappedBy: 'donnateur', targetEntity: Don::class)]
+    #[ORM\OneToMany(mappedBy: 'donnateur', targetEntity: Don::class, cascade: ['remove'])]
     private Collection $dons;
 
-    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Assistance::class)]
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Assistance::class, cascade: ['remove'])]
     private Collection $assistance;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -71,7 +71,7 @@ class Adherent
     #[ORM\JoinColumn(nullable: false)]
     private ?Sexe $sexe = null;
 
-    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: AutreDepense::class)]
+    #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: AutreDepense::class, cascade: ['remove'])]
     private Collection $autreDepenses;
 
     public function __construct()
