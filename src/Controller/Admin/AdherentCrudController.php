@@ -37,7 +37,7 @@ class AdherentCrudController extends AbstractCrudController
             TelephoneField::new('telephone')->setColumns(4),
             AssociationField::new('site')->setColumns(4),
             AssociationField::new('statut')->hideOnIndex()->setColumns(4),
-            AssociationField::new('service')->hideOnIndex()->setColumns(6),
+            AssociationField::new('service')->setColumns(6),
             AssociationField::new('fonction')->hideOnIndex()->setColumns(6),
             DateField::new('date_inscription')->setColumns(6),
         ];
