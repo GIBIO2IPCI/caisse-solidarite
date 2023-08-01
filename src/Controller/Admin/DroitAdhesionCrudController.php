@@ -37,7 +37,7 @@ class DroitAdhesionCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->hideOnForm(),
             NumberField::new('montant')->onlyOnDetail(),
             AssociationField::new('adherent'),
-            DateTimeField::new('date_adhesion')->hideOnForm(),
+            DateTimeField::new('date_adhesion')
             
         ];
     }

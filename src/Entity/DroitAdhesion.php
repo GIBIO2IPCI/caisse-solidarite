@@ -20,7 +20,6 @@ class DroitAdhesion
     private ?int $montant = 3000;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Gedmo\Timestampable(on: "create")]
     private ?\DateTimeInterface $date_adhesion = null;
 
     #[ORM\ManyToOne(inversedBy: 'droit_adhesion')]
