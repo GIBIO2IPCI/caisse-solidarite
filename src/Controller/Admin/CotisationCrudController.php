@@ -65,7 +65,7 @@ class CotisationCrudController extends AbstractCrudController
    {
         return $filters
         ->add('adherent')
-       
+            ->add('date_cotisation')
         ;
    }
 }
