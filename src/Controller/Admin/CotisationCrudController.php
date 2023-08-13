@@ -38,8 +38,7 @@ class CotisationCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->hideOnForm(),
             AssociationField::new('adherent'),
             NumberField::new('montant_cotisation')->hideWhenCreating(),
-            DateField::new('date_cotisation')->renderAsChoice(),
-            
+            DateField::new('date_cotisation')
         ];
     }
 
