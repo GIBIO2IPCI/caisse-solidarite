@@ -47,10 +47,12 @@ class CotisationCrudController extends AbstractCrudController
        return $actions
            ->update(Crud::PAGE_INDEX, Action::EDIT,
                fn (Action $action) => $action->setIcon('fa fa-edit')->addCssClass('btn btn-warning'))
-            ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ->update(Crud::PAGE_INDEX, Action::NEW,
                 fn (Action $action) => $action->setLabel("Payer une cotisation")
             )
+           ->update(Crud::PAGE_INDEX, Action::DELETE,
+               fn (Action $action) => $action->setIcon('fa fa-trash')->addCssClass('btn btn-danger text-white')
+           )
             ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN,
                 fn (Action $action) => $action->setLabel("Enregistrer")
             )
