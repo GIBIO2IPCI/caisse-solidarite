@@ -1,0 +1,62 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-2 mb-4">
+            {{ form_label(form.nom, 'Nom') }}
+            {{ form_widget(form.nom) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.prenom, 'Prenoms') }}
+            {{ form_widget(form.prenom) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.email, 'Email') }}
+            {{ form_widget(form.email) }}
+        </div>
+
+        <div class="col-2 mb-4">
+            {{ form_label(form.sexe, 'Sexe') }}
+            {{ form_widget(form.sexe) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.telephone, 'Telephone') }}
+            {{ form_widget(form.telephone) }}
+        </div>
+
+        <div class="col-2 mb-4">
+            {{ form_label(form.birthday, 'Date de naissance') }}
+            {{ form_widget(form.birthday) }}
+        </div>
+
+        <div class="col-2 mb-4">
+            {{ form_label(form.date_inscription, 'Date d\'inscription') }}
+            {{ form_widget(form.date_inscription) }}
+        </div>
+
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.site, 'Site') }}
+            {{ form_widget(form.site) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.service, 'Service') }}
+            {{ form_widget(form.service) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.fonction, 'Fonction') }}
+            {{ form_widget(form.fonction) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.statut, 'Statut') }}
+            {{ form_widget(form.statut) }}
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
