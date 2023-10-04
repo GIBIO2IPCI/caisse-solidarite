@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Adherent;
+use App\Entity\Fonction;
+use App\Entity\Service;
 use App\Entity\Sexe;
 use App\Entity\SiteAdherent;
 use App\Entity\StatutAdherent;
@@ -36,11 +38,11 @@ class AdherentType extends AbstractType
                 'choice_label' => 'libelle',
             ])
             ->add('service', EntityType::class, [
-                'class' => SiteAdherent::class,
+                'class' => Service::class,
                 'choice_label' => 'libelle',
             ])
             ->add('fonction', EntityType::class, [
-                'class' => SiteAdherent::class,
+                'class' => Fonction::class,
                 'choice_label' => 'libelle',
             ])
             ->add('sexe', EntityType::class, [

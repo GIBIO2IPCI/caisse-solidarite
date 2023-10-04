@@ -5,13 +5,15 @@ namespace App\Controller;
 use App\Entity\Adherent;
 use App\Form\AdherentType;
 use App\Repository\AdherentRepository;
+use App\Service\AdherentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/adherent')]
+#[Route('/admin/adherent')]
 class AdherentController extends AbstractController
 {
     #[Route('/', name: 'app_adherent_index', methods: ['GET'])]
@@ -22,17 +24,18 @@ class AdherentController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/new', name: 'app_adherent_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, AdherentService $adherentService): Response
     {
         $adherent = new Adherent();
         $form = $this->createForm(AdherentType::class, $adherent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($adherent);
-            $entityManager->flush();
-
+            $adherentService->saveAdhrent($adherent);
             return $this->redirectToRoute('app_adherent_index', [], Response::HTTP_SEE_OTHER);
         }
 

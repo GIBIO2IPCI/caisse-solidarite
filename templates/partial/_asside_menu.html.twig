@@ -1,0 +1,34 @@
+<aside class="w-auto">
+    <nav class="sidebar border border-right p-0 bg-light mx-0">
+
+        <div class="d-flex flex-column flex-shrink-0 p-3 mt-5 bg-light">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item mb-1">
+                    <a href="{{ path('app_home') }}" class="nav-link fw-bold {% if app.request.attributes.get('_route') == 'app_home' %} active {% endif %}">
+                        <i class="fa-solid fa-gauge fa-xl me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="{{ path('app_adherent_index') }}" class="nav-link fw-bold {% if 'app_adherent_' in app.request.attributes.get('_route') %} active {% endif %}">
+                        <i class="fa-solid fa-users fa-xl me-2"></i>
+                        Adhérents
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="{{ path('app_droit_adhesion_index') }}" class="nav-link fw-bold {% if 'app_droit_adhesion_' in app.request.attributes.get('_route') %} active {% endif %}">
+                        <i class="fa-solid fa-user-check fa-xl me-2"></i>
+                        Adhesion
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="{{ path('app_cotisation_index') }}" class="nav-link fw-bold {% if 'app_cotisation_' in app.request.attributes.get('_route') %} active {% endif %}">
+                        <i class="fa-solid fa-circle-dollar-to-slot fa-xl me-2"></i>
+                        Cotisation
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</aside>

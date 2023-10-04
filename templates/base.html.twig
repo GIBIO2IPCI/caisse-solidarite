@@ -3,60 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+              integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
     </head>
     <body>
 
-    <header class="p-3 bg-body-tertiary">
-        <div class="container-fluid">
-            <nav class="d-flex justify-content-between align-items-center">
-                <div class="ms-5 d-flex justify-content-end align-items-center">
-                </div>
-                <div class="d-flex justify-content-end align-items-center">
-                    <a href="">
-                        <img src="https://github.com/mdo.png" alt="" height="32" width="32" class="rounded-circle">
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
+        <div class="row g-0">
 
-        <div class="row mt-0">
-
-            <div class="sidebar border border-right col-auto p-0 bg-body-tertiary mx-0">
-
-                <main class="d-flex">
-                    <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 250px;">
-                        <ul class="nav nav-pills flex-column mb-auto">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link active" aria-current="page">
-                                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                                    Dashboard
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('app_adherent_index') }}" class="nav-link">
-                                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                    Adhérents
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </main>
-
+            <div class="col-2">
+                {% include 'partial/_asside_menu.html.twig' %}
             </div>
 
-            <div class="col-10 mx-0 mt-3">
-                {% block body %}{% endblock %}
+            <div class="col-10">
+                {% include 'partial/_header.html.twig' %}
+                <div class="mt-5">
+                    {% block body %}{% endblock %}
+                </div>
             </div>
 
         </div>

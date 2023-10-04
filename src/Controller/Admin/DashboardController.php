@@ -51,7 +51,7 @@ class DashboardController extends AbstractDashboardController
 
     
 
-    #[Route('/admin', name: 'admin')]
+    #[Route('/admin2', name: 'admin')]
     public function index(): Response
     {
         // return parent::index();
