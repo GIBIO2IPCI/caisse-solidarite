@@ -39,6 +39,82 @@ class AdherentRepository extends ServiceEntityRepository
         }
     }
 
+/**
+ * @return Adherent[] Returns an array of Adherent objects
+ */
+public function findByStatus(int $status): array {
+    return $this->createQueryBuilder('a')
+            ->Where('a.statut =  :val')
+            ->setParameter("val", $status)
+            ->getQuery()
+            ->getResult()
+
+        ;
+    }
+
+    /**
+     * @return Adherent[] Returns an array of Adherent objects
+     */
+    public function findBySexe(int $sexe): array {
+        return $this->createQueryBuilder('a')
+            ->Where('a.sexe = :val')
+            ->setParameter("val", $sexe)
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+    /**
+    * @return Adherent[] Returns an array of Adherent objects
+    */
+    public function findByYear(): array
+    {
+        $year = date("Y");
+        return $this->createQueryBuilder('a')
+        ->Where('DATE_FORMAT(a.date_inscription, :format) = :val')
+        ->setParameter("val", $year)
+        ->setParameter("format", '%Y')
+        ->getQuery()
+        ->getResult()
+
+        ;
+    }
+
+    /**
+     * @return Adherent[] Returns an array of Adherent objects
+     */
+    public function findByMonth(): array
+    {
+        $year = date("Y-m");
+        return $this->createQueryBuilder('a')
+            ->Where('DATE_FORMAT(a.date_inscription, :format) = :val')
+            ->setParameter("val", $year)
+            ->setParameter("format", '%Y-%m')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+    /**
+     * @return Adherent[] Returns an array of Adherent objects
+     */
+    public function findByDay(): array
+    {
+        $year = date("Y-m-d");
+        return $this->createQueryBuilder('a')
+            ->Where('DATE_FORMAT(a.date_inscription, :format) = :val')
+            ->setParameter("val", $year)
+            ->setParameter("format", '%Y-%m-%d')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+
+
 //    /**
 //     * @return Adherent[] Returns an array of Adherent objects
 //     */
@@ -63,37 +139,4 @@ class AdherentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
-public function findByStatus($status): array {
-    return $this->createQueryBuilder('a')
-            ->andWhere('a.statut =  :val')
-            ->setParameter("val", $status)
-            ->getQuery()
-            ->getResult()
-
-        ;
-    }
-
-    public function findBySexe($sexe): array {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.sexe = :val')
-            ->setParameter("val", $sexe)
-            ->getQuery()
-            ->getResult()
-
-            ;
-    }
-
-    public function findByDate(){
-        $annee = date("Y");
-        return $this->createQueryBuilder('a')
-        ->andWhere('DATE_FORMAT(a.date_inscription, :format) = :val')
-        ->setParameter("val", $annee)
-        ->setParameter("format", '%Y')
-        ->getQuery()
-        ->getResult()
-
-        ;
-    }
-
 }

@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-6 mb-4">
+            {{ form_row(form.adherent) }}
+        </div>
+        <div class="col-6 mb-4">
+            {{ form_row(form.evenement) }}
+        </div>
+    </div>
+
+    <button class="btn btn-primary">
+        <i class="fas fa-save"></i>
+        {{ button_label|default('Save') }}
+    </button>
+
+{{ form_end(form) }}

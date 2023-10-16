@@ -39,6 +39,60 @@ class CotisationRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findLast5(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.created_at', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+    /**
+     * @return Cotisation[] Returns an array of Cotisation objects
+     */
+    public function findByYear(): array
+    {
+        $year = date("Y");
+        return $this->createQueryBuilder('a')
+            ->Where('DATE_FORMAT(a.created_at, :format) = :val')
+            ->setParameter("val", $year)
+            ->setParameter("format", '%Y')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+    public function findByMonth(): array
+    {
+        $month = date("Y-m");
+        return $this->createQueryBuilder('a')
+            ->Where('DATE_FORMAT(a.created_at, :format) = :val')
+            ->setParameter("val", $month)
+            ->setParameter("format", '%Y-%m')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
+    public function findByDay(): array
+    {
+        $day = date("Y-m-d");
+        return $this->createQueryBuilder('a')
+            ->Where('DATE_FORMAT(a.created_at, :format) = :val')
+            ->setParameter("val", $day)
+            ->setParameter("format", '%Y-%m-%d')
+            ->getQuery()
+            ->getResult()
+
+            ;
+    }
+
 //    /**
 //     * @return Cotisation[] Returns an array of Cotisation objects
 //     */

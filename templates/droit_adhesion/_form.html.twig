@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-4 mb-4">
+            {{ form_label(form.adherent, 'Adherent') }}
+            {{ form_widget(form.adherent) }}
+        </div>
+
+        <div class="col-4 mb-4">
+            {{ form_label(form.date_adhesion, 'Date') }}
+            {{ form_widget(form.date_adhesion) }}
+        </div>
+
+    </div>
+
+    <button class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i>
+        {{ button_label|default('Save') }}
+    </button>
+{{ form_end(form) }}

@@ -1,8 +1,11 @@
 <aside class="w-auto">
-    <nav class="sidebar border border-right p-0 bg-light mx-0">
+    <nav class="sidebar border border-right p-0 mx-0" style="height: 100vh">
 
-        <div class="d-flex flex-column flex-shrink-0 p-3 mt-5 bg-light">
-            <ul class="nav nav-pills flex-column mb-auto">
+        <div class="d-flex flex-column flex-shrink-0 p-3">
+
+            <img class="img-fluid" src="{{ asset('images/home/logo-1.png') }}" alt="" srcset="">
+
+            <ul class="nav nav-pills flex-column mb-auto mt-4">
                 <li class="nav-item mb-1">
                     <a href="{{ path('app_home') }}" class="nav-link fw-bold {% if app.request.attributes.get('_route') == 'app_home' %} active {% endif %}">
                         <i class="fa-solid fa-gauge fa-xl me-2"></i>
@@ -25,6 +28,12 @@
                     <a href="{{ path('app_cotisation_index') }}" class="nav-link fw-bold {% if 'app_cotisation_' in app.request.attributes.get('_route') %} active {% endif %}">
                         <i class="fa-solid fa-circle-dollar-to-slot fa-xl me-2"></i>
                         Cotisation
+                    </a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a href="{{ path('app_assistance_index') }}" class="nav-link fw-bold {% if 'app_assistance_' in app.request.attributes.get('_route') %} active {% endif %}">
+                        <i class="fa-regular fa-credit-card fa-xl me-2"></i>
+                        Assistance
                     </a>
                 </li>
             </ul>
