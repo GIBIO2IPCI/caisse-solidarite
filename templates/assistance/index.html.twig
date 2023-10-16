@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cotisation index{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center table-responsive table-sm">
+
+            <div class="">
+                <h1 class="mb-4">Assistance index</h1>
+            </div>
+
+            <div class="d-flex">
+                <a class="btn btn-secondary me-3" href="{{ path('app_assistance_index') }}">
+                    <i class="fa-solid fa-filter"></i>
+                    Filtre
+                </a>
+                <a class="btn btn-primary me-3" href="{{ path('app_assistance_new') }}">
+                    <i class="fa-solid fa-plus"></i>
+                    create new
+                </a>
+            </div>
+
+        </div>
+
+        <table class="table table-bordered table-striped text-center table-responsive table-sm align-middle">
+            <thead>
+            <tr>
+                <th>Adhérent</th>
+                <th>Evenement</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for assistance in assistances %}
+                <tr>
+                    <td>{{ assistance.adherent}}</td>
+                    <td>{{ assistance.evenement }}</td>
+                    <td>{{ assistance.dateAssistance ? assistance.dateAssistance|date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a class="btn btn-secondary" href="{{ path('app_assistance_show', {'id': cotisation.id}) }}">
+                            <i class="fa-solid fa-eye"></i>
+                            Show
+                        </a>
+                        <a class="btn btn-warning" href="{{ path('app_assistance_edit', {'id': cotisation.id}) }}">
+                            <i class="fa-solid fa-edit"></i>
+                            edit
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('app_assistance_new') }}">
+            <i class="fa-solid fa-plus"></i>
+            Create new
+        </a>
+
+    </div>
+
+{% endblock %}

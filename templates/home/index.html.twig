@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid mb-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-center text-uppercase fw-bold display-5">tableau de bord</h1>
+            {% if is_granted('ROLE_ADMIN') %}
+                <h1 class="text-uppercase fw-bold display-1">{{ sommeCaisse | number_format(0, ' ', ' ') }} FCFA</h1>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="container-fluid mb-5">
+
+        <h1 class="text-uppercase fw-bold">Les adherents</h1>
+
+        <div class="row g-3 row-cols-4">
+
+            <div class="col">
+                <div class="card text-white" style="background: #5784BA">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Total des adherents</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherents }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Hommes</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsHomme }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white" style="background: #F27498;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Femmes</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsFemme }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card bg-secondary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">En service</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsService }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white" style="background: #384454;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Depart</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsDepart }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white" style="background: #18534F;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Cette année</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsInYear }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white" style="background: #D46F4D;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Ce mois</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsInYear }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card text-white" style="background: #26474E;">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Aujourd'hui</h5>
+                        <h1 class="card-text display-4 fw-bold">{{ allAdherentsInDay }}</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="text-uppercase fw-bold">Les Cotisations</h1>
+            <h1 class="text-uppercase fw-bold">{{ sommeAllCotisations | number_format(0, ' ', ' ') }} FCFA</h1>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-6">
+                <div class="row g-3 row-cols-2">
+
+                    <div class="col">
+                        <div class="card" style="background: #5784BA">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Total des cotisations</h5>
+                                        <h1 class="card-text fw-bold">{{ sommeAllCotisations | number_format(0, ' ', ' ') }} FCFA</h1>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisations }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="background: #5784BA">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Aujourd'hui</h5>
+                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInDay | number_format(0, ' ', ' ') }} FCFA</h1>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisationsInDay }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="background: #5784BA">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Ce mois</h5>
+                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInMonth | number_format(0, ' ', ' ') }} FCFA</h1>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisationsInMonth }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card" style="background: #5784BA">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-3">Cette année</h5>
+                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInYear | number_format(0, ' ', ' ') }} FCFA</h1>
+                                    </div>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisationsInYear }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-6">
+                <table class="table table-bordered table-striped text-center table-responsive table-sm align-middle">
+                    <thead>
+                    <tr>
+                        <th>Adhérent</th>
+                        <th>Caissier</th>
+                        <th>Pour</th>
+                        <th>Created_at</th>
+                        <th>Updated_at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cotisation in latestCotisations %}
+                        <tr>
+                            <td>{{ cotisation.adherent.identifiant }}</td>
+                            <td>{{ cotisation.user }}</td>
+                            <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|date('Y-m-d') : '' }}</td>
+                            <td>{{ cotisation.createdAt ? cotisation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ cotisation.updatedAt ? cotisation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
