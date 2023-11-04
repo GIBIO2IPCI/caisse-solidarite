@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdherentRepository::class)]
 class Adherent
@@ -34,6 +35,7 @@ class Adherent
     private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\Date()]
     private ?\DateTimeInterface $date_inscription = null;
 
     #[ORM\ManyToOne(inversedBy: 'adherents')]

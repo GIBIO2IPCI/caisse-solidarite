@@ -1,14 +1,16 @@
 {{ form_start(form) }}
     <div class="row">
         <div class="col-6 mb-4">
-            {{ form_row(form.adherent) }}
+            {{ form_label(form.adherent, "Adhérent") }}
+            {{ form_widget(form.adherent) }}
         </div>
         <div class="col-6 mb-4">
-            {{ form_row(form.date_cotisation) }}
+            {{ form_label(form.date_cotisation, 'Pour') }}
+            {{ form_widget(form.date_cotisation) }}
         </div>
     </div>
     <button class="btn btn-primary">
         <i class="fa-solid fa-save"></i>
-        {{ button_label|default('Save') }}
+        {{ button_label|default('Enregistrer') }}
     </button>
 {{ form_end(form) }}

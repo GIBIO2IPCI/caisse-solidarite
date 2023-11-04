@@ -1,0 +1,43 @@
+{% extends "pdf/base.pdf.html.twig" %}
+
+{% block title %}Liste des adherents{% endblock %}
+
+
+{% block body %}
+
+    <h1 class="text-uppercase text-center">Liste des adherents</h1>
+
+    <div class="container-fluid">
+
+        <table class="table table-bordered text-center align-middle">
+            <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Sexe</th>
+                <th>Site</th>
+                <th>Statut</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for adherent in adherents %}
+                <tr>
+                    <td>{{ adherent.identifiant }}</td>
+                    <td>{{ adherent.nom }}</td>
+                    <td>{{ adherent.prenom }}</td>
+                    <td>{{ adherent.email }}</td>
+                    <td>{{ adherent.telephone }}</td>
+                    <td>{{ adherent.sexe }}</td>
+                    <td>{{ adherent.site }}</td>
+                    <td>{{ adherent.statut }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}

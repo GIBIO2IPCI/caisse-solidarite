@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
 
@@ -115,11 +115,8 @@
                                 <div class="col-9">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Total des cotisations</h5>
-                                        <h1 class="card-text fw-bold">{{ sommeAllCotisations | number_format(0, ' ', ' ') }} FCFA</h1>
+                                        <h3 class="card-text fw-bold">{{ sommeAllCotisations | number_format(0, ' ', ' ') }} FCFA</h3>
                                     </div>
-                                </div>
-                                <div class="col-3 d-flex align-items-center">
-                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisations }}</h1>
                                 </div>
                             </div>
                         </div>
@@ -131,7 +128,7 @@
                                 <div class="col-9">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Aujourd'hui</h5>
-                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInDay | number_format(0, ' ', ' ') }} FCFA</h1>
+                                        <h3 class="card-text fw-bold">{{ sommeAllCotisationsInDay | number_format(0, ' ', ' ') }} FCFA</h3>
                                     </div>
                                 </div>
                                 <div class="col-3 d-flex align-items-center">
@@ -147,7 +144,7 @@
                                 <div class="col-9">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Ce mois</h5>
-                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInMonth | number_format(0, ' ', ' ') }} FCFA</h1>
+                                        <h3 class="card-text fw-bold">{{ sommeAllCotisationsInMonth | number_format(0, ' ', ' ') }} FCFA</h3>
                                     </div>
                                 </div>
                                 <div class="col-3 d-flex align-items-center">
@@ -163,11 +160,8 @@
                                 <div class="col-9">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Cette année</h5>
-                                        <h1 class="card-text fw-bold">{{ sommeAllCotisationsInYear | number_format(0, ' ', ' ') }} FCFA</h1>
+                                        <h3 class="card-text fw-bold">{{ sommeAllCotisationsInYear | number_format(0, ' ', ' ') }} FCFA</h3>
                                     </div>
-                                </div>
-                                <div class="col-3 d-flex align-items-center">
-                                    <h1 class="card-subtitle mb-2 fw-bold display-1">{{ allCotisationsInYear }}</h1>
                                 </div>
                             </div>
                         </div>
@@ -182,10 +176,10 @@
                     <thead>
                     <tr>
                         <th>Adhérent</th>
-                        <th>Caissier</th>
+                        <th>Par</th>
                         <th>Pour</th>
-                        <th>Created_at</th>
-                        <th>Updated_at</th>
+                        <th>Cotisé le</th>
+                        <th>Modifié le</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -193,9 +187,9 @@
                         <tr>
                             <td>{{ cotisation.adherent.identifiant }}</td>
                             <td>{{ cotisation.user }}</td>
-                            <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|date('Y-m-d') : '' }}</td>
-                            <td>{{ cotisation.createdAt ? cotisation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ cotisation.updatedAt ? cotisation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|format_date("medium", locale = 'fr') : '' }}</td>
+                            <td>{{ cotisation.createdAt ? cotisation.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                            <td>{{ cotisation.updatedAt ? cotisation.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                         </tr>
                     {% else %}
                         <tr>

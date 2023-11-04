@@ -1,0 +1,40 @@
+.title-table{
+    color: #0b5ed7;
+    text-align: center;
+    font-size: 3rem;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+thead{
+    background-color: #0b5ed7;
+    color: white;
+}
+
+.recu-title{
+    font-size: 2rem;
+}
+
+.pasteur-info{
+    font-size: 1.4rem;
+}
+
+.info-adherent{
+    font-size: 1.1rem;
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+}
+
+.info-caisse{
+    position: relative;
+    font-size: 1.1rem;
+    bottom: -30px;
+    left: 0;
+}
+
+i{
+    text-decoration: underline;
+}

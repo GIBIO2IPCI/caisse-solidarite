@@ -1,0 +1,41 @@
+{% extends "pdf/base.pdf.html.twig" %}
+
+{% block title %}Liste des assistances{% endblock %}
+
+
+{% block body %}
+
+    <h1 class="text-uppercase title-table">Liste des assistances</h1>
+
+    <div class="container-fluid">
+
+    <table class="table table-bordered text-center align-middle">
+        <thead>
+        <tr>
+            <th>Identifiant</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Montant</th>
+            <th>Statut</th>
+            <th>Date d'assistance</th>
+            <th>Montant</th>
+            <th>Événement</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for assistance in assistances %}
+            <tr>
+                <td>{{ assistance.adherent.identifiant }}</td>
+                <td>{{ assistance.adherent.nom }}</td>
+                <td>{{ assistance.adherent.prenom }}</td>
+                <td>{{ assistance.adherent.site }}</td>
+                <td>{{ assistance.adherent.statut }}</td>
+                <td>{{ assistance.dateAssistance|format_datetime('full', 'short', locale='fr') }}</td>
+                <td>{{ assistance.evenement.montantEvent }}</td>
+                <td>{{ assistance.evenement.libelle }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

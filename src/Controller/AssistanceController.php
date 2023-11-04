@@ -6,6 +6,8 @@ use App\Entity\Assistance;
 use App\Form\AssistanceType;
 use App\Repository\AssistanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AssistanceController extends AbstractController
 {
     #[Route('/', name: 'app_assistance_index', methods: ['GET'])]
-    public function index(AssistanceRepository $assistanceRepository): Response
+    public function index(AssistanceRepository $assistanceRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $assistances = $assistanceRepository->findAll();
+        $pagination = $paginator->paginate(
+            $assistances,
+            $request->query->getInt('page', 1),
+            15
+        );
+
         return $this->render('assistance/index.html.twig', [
-            'assistances' => $assistanceRepository->findAll(),
+            'assistances' => $pagination,
         ]);
     }
 
@@ -77,5 +86,31 @@ class AssistanceController extends AbstractController
         }
 
         return $this->redirectToRoute('app_assistance_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/download/pdf', name: 'app_assistance_liste_pdf', methods: ['GET'])]
+    public function downloadPdf(AssistanceRepository $assistanceRepository, Pdf $pdf): Response
+    {
+        $assistances = $assistanceRepository->findAll();
+
+        $html = $this->renderView('assistance/pdf/liste.html.twig', ['assistances' => $assistances]);
+
+
+        return new Response(
+            $pdf->getOutputFromHtml($html, [
+                'enable-local-file-access' => true,
+                'orientation' => 'landscape',
+                'footer-right' => '[page] / [toPage]',
+                'footer-left' => 'Caisse de solidarité, liste des assistances',
+                'header-left' => 'Institut Pasteur de Côte d\'Ivoire',
+                'header-right' => '[isodate] à [time]',
+            ]),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="liste assistance.pdf"',
+                'encoding' => 'utf-8',
+            ]
+        );
     }
 }

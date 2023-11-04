@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg text-white" aria-label="Thirteenth navbar example" style="background-color: #003459">
+<nav class="navbar navbar-expand-lg text-white position-sticky" aria-label="Thirteenth navbar example" style="background-color: #003459">
 
     <div class="container-fluid">
 
@@ -11,6 +11,10 @@
             <a class="navbar-brand col-lg-3 me-0 text-uppercase text-white fw-bold" href="{{ path('app_home') }}">
                 IPCI - Gestion de caisse de solidarité
             </a>
+
+
+            {% include 'partial/_search_form.html.twig' %}
+
 
 {#            <ul class="navbar-nav justify-content-center">#}
 {#                <li class="nav-item">#}
@@ -34,8 +38,8 @@
 
             <div class="d-flex justify-content-end">
                 {% if app.user %}
-                    <img src="https://github.com/mdo.png" alt="Logo" width="40" height="40" class="rounded-circle">
-                    <a class="btn mx-3 fw-bold" href="{{ path('app_logout') }}" style="background-color: #FFFFFF">Se déconnecter</a>
+                    <img src="{{ asset('images/home/user.jpg') }}" alt="Logo" width="40" height="40" class="rounded-circle">
+                    <a class="btn btn-outline-info mx-3 fw-bold link-opacity-100-hover" href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% endif %}
 
 

@@ -5,22 +5,41 @@ namespace App\Controller;
 use App\Entity\Adherent;
 use App\Form\AdherentType;
 use App\Repository\AdherentRepository;
-use App\Service\AdherentService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/admin/adherent')]
 class AdherentController extends AbstractController
 {
     #[Route('/', name: 'app_adherent_index', methods: ['GET'])]
-    public function index(AdherentRepository $adherentRepository): Response
+    public function index(AdherentRepository $adherentRepository, Request $request, PaginatorInterface $paginator): Response
     {
+
+        $adherent = $adherentRepository->findAll();
+        $pagination = $paginator->paginate(
+            $adherent,
+            $request->query->getInt('page', 1),
+            15
+        );
+        $q = $request->get("q");
+
+        if ($q != null){
+            $adherent = $adherentRepository->findBy(
+                [
+                    "nom" => $q,
+                    ]
+            );
+        }
+
         return $this->render('adherent/index.html.twig', [
-            'adherents' => $adherentRepository->findAll(),
+            'adherents' => $pagination,
         ]);
     }
 
@@ -28,14 +47,16 @@ class AdherentController extends AbstractController
      * @throws TransportExceptionInterface
      */
     #[Route('/new', name: 'app_adherent_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AdherentService $adherentService): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $adherent = new Adherent();
         $form = $this->createForm(AdherentType::class, $adherent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $adherentService->saveAdhrent($adherent);
+            $entityManager->persist($adherent);
+            $entityManager->flush();
+
             return $this->redirectToRoute('app_adherent_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -80,5 +101,29 @@ class AdherentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_adherent_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/download/pdf', name: 'app_adherent_download_pdf', methods: ['GET'])]
+    public function downloadPdf(AdherentRepository $adherentRepository, Pdf $pdf): Response
+    {
+        $adherents = $adherentRepository->findAll();
+        $html = $this->renderView('adherent/pdf/liste.html.twig', ['adherents' => $adherents]);
+
+        return new Response(
+            $pdf->getOutputFromHtml($html, [
+                'enable-local-file-access' => true,
+                'orientation' => 'landscape',
+                'footer-right' => '[page] / [toPage]',
+                'footer-left' => 'Caisse de solidarité, liste des adhérents',
+                'header-left' => 'Institut Pasteur de Côte d\'Ivoire',
+                'header-right' => '[isodate] à [time]',
+            ]),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="liste adherents.pdf"',
+                'encoding' => 'utf-8',
+            ]
+        );
     }
 }

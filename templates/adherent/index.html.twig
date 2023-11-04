@@ -1,44 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Adherent index{% endblock %}
+{% block title %}Liste des adhérents{% endblock %}
 
 {% block body %}
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="container-fluid">
+        
         <div class="d-flex justify-content-between align-items-center">
 
             <div class="">
-                <h1 class="mb-4">Adherent index</h1>
+                <h1 class="mb-4">Liste des adhérents</h1>
             </div>
 
+
             <div class="d-flex">
-                <button type="button" class="btn btn-secondary me-3"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+
+                <a class="btn btn-danger me-3" href="{{ path('app_adherent_download_pdf') }}" target="_blank">
+                    <i class="fa-solid fa-download"></i>
+                    Exporter la liste
+                </a>
+
+                <a class="btn btn-light me-3" href="{{ path('app_adherent_new') }}">
                     <i class="fa-solid fa-filter"></i>
-                    Filtre
-                </button>
+                    filtrer
+                </a>
+
                 <a class="btn btn-primary me-3" href="{{ path('app_adherent_new') }}">
                     <i class="fa-solid fa-plus"></i>
-                    create new
+                    Inscrire un nouvel adhérent
                 </a>
+
             </div>
 
         </div>
@@ -48,11 +39,11 @@
             <tr>
                 <th>Identifiant</th>
                 <th>Nom</th>
-                <th>Prénom</th>
+                <th>Prénoms</th>
                 <th>Email</th>
-                <th>Telephone</th>
-                <th>Date_inscription</th>
-                <th>Birthday</th>
+                <th>Téléphone</th>
+                <th>Sexe</th>
+                <th>Site</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -64,30 +55,27 @@
                     <td>{{ adherent.prenom }}</td>
                     <td>{{ adherent.email }}</td>
                     <td>{{ adherent.telephone }}</td>
-                    <td>{{ adherent.dateInscription ? adherent.dateInscription|date('Y-m-d') : '' }}</td>
-                    <td>{{ adherent.birthday ? adherent.birthday|date('Y-m-d') : '' }}</td>
+                    <td>{{ adherent.sexe }}</td>
+                    <td>{{ adherent.site }}</td>
                     <td>
-                        <a class="btn btn-secondary" href="{{ path('app_adherent_show', {'id': adherent.id}) }}">
+                        <a class="btn btn-secondary me-2" href="{{ path('app_adherent_show', {'id': adherent.id}) }}">
                             <i class="fa-solid fa-eye"></i>
-                            show
+                            voir plus
                         </a>
-                        <a class="btn btn-warning text" href="{{ path('app_adherent_edit', {'id': adherent.id}) }}">
+                        <a class="btn btn-warning" href="{{ path('app_adherent_edit', {'id': adherent.id}) }}">
                             <i class="fa-solid fa-edit"></i>
-                            edit
+                            modifier
                         </a>
                     </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="9">no records found</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-        <a class="btn btn-primary" href="{{ path('app_adherent_new') }}">
-            <i class="fas fa-plus"></i>
-            Create new
-        </a>
+        {# display navigation #}
+        <div class="pagination">
+            {{ knp_pagination_render(adherents) }}
+        </div>
+
     </div>
 {% endblock %}

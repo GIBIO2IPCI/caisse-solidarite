@@ -1,0 +1,64 @@
+{% extends "pdf/base.pdf.html.twig" %}
+
+{% block title %}Reçu de cotisation{% endblock %}
+
+{% block body %}
+
+    {% set genre = cotisation.adherent.sexe == 'FEMME' ? 'Madame' : 'Monsieur' %}
+
+    <img class="mb-3" src="{{ absolute_url(asset('images/home/logo-1.png')) }}" alt="Logo">
+    <h1 class="recu-title text-center text-uppercase fw-bold mb-3">Reçu de cotisation</h1>
+
+
+    <div class="pasteur-info text-center mt-3 mb-3">
+
+        <p>
+            Paiement de la <strong>cotisation</strong> de {{ genre }} {{ cotisation.adherent.nom }}
+            {{ cotisation.adherent.prenom }} pour la date de
+            <strong>{{ cotisation.dateCotisation|format_date("full", pattern = "MMMM Y", locale = 'fr') }}</strong>
+            par <strong>{{ cotisation.user.adherent.nom }} {{ cotisation.user.adherent.prenom }}</strong> le
+            {{ cotisation.createdAt|format_datetime('full', 'none', locale='fr') }}.<br/>
+            Le montant de la cotisation est de <strong>{{ cotisation.montantCotisation }} FCFA</strong>.
+        </p>
+
+        <p>
+            Par conséquent, {{ genre }} {{ cotisation.adherent.nom }} {{ cotisation.adherent.prenom }}
+            est à jour pour la date de
+            {{ cotisation.dateCotisation|format_date("full", pattern = "MMMM Y", locale = 'fr') }}.
+        </p>
+
+    </div>
+
+
+    <div class="text-center">
+        <span class="mx-5">Fait le {{ cotisation.createdAt|format_datetime('full', 'none', locale='fr') }}</span>
+        <img class="img-fluid mx-5" src="{{ absolute_url(asset('pdf/cotisations/cachet.png')) }}" alt="cachet" height="150" width="150">
+    </div>
+
+    <footer class="footer">
+        <div class="info info-caisse">
+
+            <p class="">
+                <i>Information du prestataire de service</i><br/>
+                <strong>Nom et Prénoms</strong> : {{ genre }} {{ cotisation.user.adherent.nom }} {{ cotisation.user.adherent.prenom }}<br/>
+                <strong>Site</strong> : {{ cotisation.user.adherent.site }}<br/>
+                <strong>Téléphone</strong> : (+225) {{ cotisation.user.adherent.telephone }}<br/>
+                <strong>Email</strong> : {{ cotisation.user.adherent.email }}
+            </p>
+
+        </div>
+
+        <div class="info info-adherent">
+
+            <p class="">
+                <i>Information sur l'adhérent</i><br/>
+                <strong>Nom et Prénoms</strong> : {{ cotisation.adherent.nom }} {{ cotisation.adherent.prenom }}<br/>
+                <strong>Site</strong> : {{ cotisation.adherent.site }}<br/>
+                <strong>Téléphone</strong> : (+225) {{ cotisation.adherent.telephone }}<br/>
+                <strong>Email</strong> : {{ cotisation.adherent.email }}
+            </p>
+
+        </div>
+    </footer>
+
+{% endblock %}

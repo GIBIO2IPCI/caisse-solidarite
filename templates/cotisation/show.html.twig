@@ -1,98 +1,100 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cotisation{% endblock %}
+{% block title %}Reçu de cotisation{% endblock %}
 
 {% block body %}
+
+    {% set genre = cotisation.adherent.sexe == 'FEMME' ? 'Madame' : 'Monsieur' %}
+
     <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
+        {# Logo et Boutons #}
+        <div class="d-flex justify-content-between align-items-center mb-4">
 
-            <div class="">
-                <h1 class="mb-4">Adherent</h1>
+            <div class="logo">
+                <img class="mb-3" src="{{ absolute_url(asset('images/home/logo-1.png')) }}" alt="Logo">
             </div>
 
             <div class="d-flex">
                 <a class="btn btn-info me-3" href="{{ path('app_cotisation_index') }}">
                     <i class="fa-solid fa-rotate-left"></i>
-                    back to list
+                    retour à la liste
                 </a>
                 <a class="btn btn-warning me-3" href="{{ path('app_cotisation_edit', {'id': cotisation.id}) }}">
                     <i class="fa-solid fa-edit"></i>
-                    edit
+                    modifier
                 </a>
                 {{ include('cotisation/_delete_form.html.twig') }}
             </div>
 
         </div>
 
-        <div class="">
-            <table class="table table-striped table-bordered table-responsive table-sm align-middle">
-                <tbody>
-                <tr>
-                    <th>Montant_cotisation</th>
-                    <td>{{ cotisation.montantCotisation }}</td>
-                </tr>
-                <tr>
-                    <th>Date_cotisation</th>
-                    <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Created_at</th>
-                    <td>{{ cotisation.createdAt ? cotisation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Updated_at</th>
-                    <td>{{ cotisation.updatedAt ? cotisation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                </tbody>
-            </table>
+        {# Titre #}
+        <h1 class="recu-title text-center text-uppercase fw-bold mb-3">Reçu de cotisation</h1>
+
+        {# Message sur la cotisation #}
+        <div class="text-center mt-3 mb-3">
+
+            <p>
+                Paiement de la <strong>cotisation</strong> de {{ genre }} {{ cotisation.adherent.nom }}
+                {{ cotisation.adherent.prenom }} pour la date de
+                <strong>{{ cotisation.dateCotisation|format_date("full", pattern = "MMMM Y", locale = 'fr') }}</strong>
+                par <strong>{{ cotisation.user.adherent.nom }} {{ cotisation.user.adherent.prenom }}</strong> le
+                {{ cotisation.createdAt|format_datetime('full', 'none', locale='fr') }}.<br/>
+                Le montant de la cotisation est de <strong>{{ cotisation.montantCotisation }} FCFA</strong>.
+            </p>
+
+            <p>
+                Par conséquent, {{ genre }} {{ cotisation.adherent.nom }} {{ cotisation.adherent.prenom }}
+                est à jour pour la date de
+                {{ cotisation.dateCotisation|format_date("full", pattern = "MMMM Y", locale = 'fr') }}.
+            </p>
+
         </div>
 
-        <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-6"></div>
+        {# Date et Cachet #}
+        <div class="text-center mb-4">
+            <span class="mx-5">Fait le {{ cotisation.createdAt|format_datetime('full', 'none', locale='fr') }}</span>
+            <img class="img-fluid mx-5" src="{{ absolute_url(asset('pdf/cotisations/cachet.png')) }}" alt="cachet" height="150" width="150">
         </div>
 
-    </div>
+        {# Information caisse et adhérent #}
+        <div class="d-flex justify-content-around">
 
-    <div class="container-fluid">
-        <table class="table table-bordered table-striped text-center table-responsive table-sm align-middle">
-            <thead>
-            <tr>
-                <th>Adhérent</th>
-                <th>Caissier</th>
-                <th>Pour</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for cotisation in cotisation.adherent.cotisations %}
-                <tr>
-                    <td>{{ cotisation.adherent.identifiant }}</td>
-                    <td>{{ cotisation.user }}</td>
-                    <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|date('Y-m-d') : '' }}</td>
-                    <td>{{ cotisation.createdAt ? cotisation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>{{ cotisation.updatedAt ? cotisation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td>
-                        <a class="btn btn-secondary" href="{{ path('app_cotisation_show', {'id': cotisation.id}) }}">
-                            <i class="fa-solid fa-eye"></i>
-                            show
-                        </a>
-                        <a class="btn btn-warning" href="{{ path('app_cotisation_edit', {'id': cotisation.id}) }}">
-                            <i class="fa-solid fa-edit"></i>
-                            edit
-                        </a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+            <div class="">
+
+                <p class="">
+                    <i>Information du prestataire de service</i><br/>
+                    <strong>Nom et Prénoms</strong> : {{ genre }} {{ cotisation.user.adherent.nom }} {{ cotisation.user.adherent.prenom }}<br/>
+                    <strong>Site</strong> : {{ cotisation.user.adherent.site }}<br/>
+                    <strong>Téléphone</strong> : (+225) {{ cotisation.user.adherent.telephone }}<br/>
+                    <strong>Email</strong> : {{ cotisation.user.adherent.email }}
+                </p>
+
+            </div>
+
+            <div class="">
+
+                <p class="">
+                    <i>Information sur l'adhérent</i><br/>
+                    <strong>Nom et Prénoms</strong> : {{ cotisation.adherent.nom }} {{ cotisation.adherent.prenom }}<br/>
+                    <strong>Site</strong> : {{ cotisation.adherent.site }}<br/>
+                    <strong>Téléphone</strong> : (+225) {{ cotisation.adherent.telephone }}<br/>
+                    <strong>Email</strong> : {{ cotisation.adherent.email }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {# Bouton exporter en pdf #}
+        <div class="text-center mt-5">
+            <a class="btn btn-success" href="{{ path('app_cotisation_paiement_pdf', {'id': cotisation.id}) }}" target="_blank">
+                <i class="fa-solid fa-file-pdf"></i>
+                Exporter en PDF
+            </a>
+        </div>
+
     </div>
 
 {% endblock %}

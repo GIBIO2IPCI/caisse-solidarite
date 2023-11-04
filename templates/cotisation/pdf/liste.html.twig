@@ -1,0 +1,44 @@
+{% extends "pdf/base.pdf.html.twig" %}
+
+{% block title %}Liste des cotisation{% endblock %}
+
+
+{% block body %}
+
+
+    <h1 class="text-center text-uppercase title-table">Liste des cotisation</h1>
+
+    <div class="container-fluid">
+
+        <table class="table table-bordered text-center align-middle">
+            <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Montant</th>
+                <th>par</th>
+                <th>Pour</th>
+                <th>Date de cotisation</th>
+                <th>Modifié le</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cotisation in cotisations %}
+                <tr>
+                    <td>{{ cotisation.adherent.identifiant }}</td>
+                    <td>{{ cotisation.adherent.nom }}</td>
+                    <td>{{ cotisation.adherent.prenom }}</td>
+                    <td>{{ cotisation.montantCotisation }} FCFA</td>
+                    <td>{{ cotisation.user }}</td>
+                    <td>{{ cotisation.dateCotisation ? cotisation.dateCotisation|format_date("full", pattern = "MMMM Y", locale = 'fr') : '' }}</td>
+                    <td>{{ cotisation.createdAt ? cotisation.createdAt|format_datetime('full', 'short', locale='fr') : '' }}</td>
+                    <td>{{ cotisation.updatedAt ? cotisation.updatedAt|format_datetime('full', 'short', locale='fr') : '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock %}
